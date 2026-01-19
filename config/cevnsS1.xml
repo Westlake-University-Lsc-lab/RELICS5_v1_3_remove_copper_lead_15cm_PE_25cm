@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <BambooMC>
+    <run number="0"/>
+    <geometry>
+      <material name="Material">
+        <parameter name="LXe_SCINTILLATIONYIELD" value="1000000."/>
+        <parameter name="LXe_RESOLUTIONSCALE" value="0."/>
+        <parameter name="LXe_ABSLENGTH" value="6.91 5000 6.98 5000 7.05 5000"/>
+        <parameter name="GXe_ABSLENGTH" value="6.91 20000 6.98 20000 7.05 20000"/>
+        <parameter name="SS304LSteel_REFLECTIVITY" value="1 0.57 5 0.57"/>
+        <parameter name="Quartz_RINDEX" value="1 1.70 6.9 1.70 6.91 1.70 6.98 1.70 7.05 1.70"/>
+        <parameter name="Teflon_REFLECTIVITY" value="6.91 0.95 6.98 0.95 7.05 0.95" />
+        <parameter name="TeflonGas_REFLECTIVITY" value="6.91 0.70 6.98 0.70 7.05 0.70" />
+        <parameter name="Teflon_SPECULARLOBECONSTANT" value="6.91 0.01 6.98 0.01 7.05 0.01" />
+        <parameter name="TeflonGas_SPECULARLOBECONSTANT" value="6.91 0.01 6.98 0.01 7.05 0.01" />
+        <parameter name="LXe_RINDEX" value="6.91 1.69 6.98 1.69 7.05 1.69" />
+      </material>
+      <detector type="World" name="World">
+        <parameter name="half_x" value="251*cm"/>
+        <parameter name="half_y" value="251*cm"/>
+        <parameter name="half_z" value="251*cm"/>
+      </detector>
+      <detector type="Array" name="tR8520" parent="World">
+        <parameter name="soliname" value="R8520Solid"/>
+        <parameter name="logivol" value="R8520Log"/>
+        <parameter name="physvol" value="R8520"/>
+        <parameter name="objects" value="PMTsR8520"/>
+        <parameter name="source" value="data/topPMT.txt"/>
+        <parameter name="base_type" value="dielectric_metal"/>
+        <parameter name="casing_finish" value="polished"/>
+        <parameter name="casing_type" value="dielectric_metal"/>
+        <parameter name="window_partner" value="parent"/>
+        <parameter name="window_finish" value="polished"/>
+        <parameter name="window_order" value="1"/>
+        <parameter name="photocathode_finish" value="polished"/>
+        <parameter name="sendname" value="bR8520"/>
+        <parameter name="opticalsd" value="1"/>
+        <parameter name="entrack" value="1"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+      <detector type="Array" name="bR8520" parent="World">
+        <parameter name="soliname" value="R8520Solid"/>
+        <parameter name="logivol" value="R8520Log"/>
+        <parameter name="physvol" value="R8520"/>
+        <parameter name="objects" value="PMTsR8520"/>
+        <parameter name="source" value="data/botPMT.txt"/>
+        <parameter name="base_type" value="dielectric_metal"/>
+        <parameter name="casing_finish" value="polished"/>
+        <parameter name="casing_type" value="dielectric_metal"/>
+        <parameter name="window_partner" value="parent"/>
+        <parameter name="window_finish" value="polished"/>
+        <parameter name="window_order" value="1"/>
+        <parameter name="photocathode_finish" value="polished"/>
+        <parameter name="sendname" value="tR8520"/>
+        <parameter name="opticalsd" value="1"/>
+        <parameter name="entrack" value="1"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+      <detector type="Cylinder" name="Teflon" parent="World">
+        <parameter name="soliname" value="TeflonSolid"/>
+        <parameter name="logivol" value="TeflonLog"/>
+        <parameter name="physvol" value="Teflon"/>
+        <parameter name="radius" value="83*mm"/>
+        <parameter name="height" value="160.3*mm"/>
+        <parameter name="material" value="Teflon"/>
+        <parameter name="shift_z" value="-12.55*mm"/>
+        <parameter name="surface" value="1"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+        <detector type="Cylinder" name="lxenon" parent="Teflon">
+        <parameter name="soliname" value="lxenonSolid"/>
+        <parameter name="logivol" value="lxenonLog"/>
+        <parameter name="physvol" value="lxenon"/>
+        <parameter name="radius" value="77.5*mm"/>
+        <parameter name="height" value="160.3*mm"/>
+        <parameter name="material" value="LXe"/>
+        <parameter name="shift_z" value="0*mm"/>
+        <parameter name="surface" value="0"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+      <detector type="Cylinder" name="TeflonGas" parent="World">
+        <parameter name="soliname" value="TeflonGasSolid"/>
+        <parameter name="logivol" value="TeflonGasLog"/>
+        <parameter name="physvol" value="TeflonGas"/>
+        <parameter name="radius" value="83*mm"/>
+        <parameter name="height" value="25.1*mm"/>
+        <parameter name="material" value="TeflonGas"/>
+        <parameter name="shift_z" value="80.15*mm"/>
+        <parameter name="surface" value="1"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+      <detector type="Cylinder" name="gasxenon" parent="TeflonGas">
+        <parameter name="soliname" value="gasxenonSolid"/>
+        <parameter name="logivol" value="gasxenonLog"/>
+        <parameter name="physvol" value="gasxenon"/>
+        <parameter name="radius" value="77.5*mm"/>
+        <parameter name="height" value="25.1*mm"/>
+        <parameter name="material" value="GXe"/>
+        <parameter name="shift_z" value="0*mm"/>
+        <parameter name="surface" value="0"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+      <detector type="HolesBoard" name="TopTeflon" parent="gasxenon">
+        <parameter name="soliname" value="TopTeflonSolid"/>
+        <parameter name="logivol" value="TopTeflonLog"/>
+        <parameter name="physvol" value="TopTeflon"/>
+        <parameter name="radius" value="77.5*mm"/>
+        <parameter name="height" value="2.5*mm"/>
+        <parameter name="width_x" value="20.5*mm"/>
+        <parameter name="sides" value="0"/>
+        <parameter name="material" value="TeflonGas"/>
+        <parameter name="shift_z" value="11.3*mm"/>
+        <parameter name="source" value="data/topTeflon.txt"/>
+        <parameter name="surface" value="1"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+      <detector type="HolesBoard" name="BotTeflon" parent="lxenon">
+        <parameter name="soliname" value="BotTeflonSolid"/>
+        <parameter name="logivol" value="BotTeflonLog"/>
+        <parameter name="physvol" value="BotTeflon"/>
+        <parameter name="radius" value="77.5*mm"/>
+        <parameter name="height" value="2.5*mm"/>
+        <parameter name="width_x" value="20.5*mm"/>
+        <parameter name="sides" value="0"/>
+        <parameter name="material" value="Teflon"/>
+        <parameter name="shift_z" value="-78.9*mm"/>
+        <parameter name="source" value="data/botTeflon.txt"/>
+        <parameter name="surface" value="1"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+      <detector type="MeshGrid" name="Anode" parent="gasxenon">
+        <parameter name="soliname" value="AnodeSolid"/>
+        <parameter name="logivol" value="AnodeLog"/>
+        <parameter name="physvol" value="Anode"/>
+        <parameter name="shift_z" value="-10*mm"/>
+        <parameter name="radius" value="77.5*mm"/>
+        <parameter name="wire_diameter" value="0.1*mm"/>
+        <parameter name="wire_pitch" value="2.887*mm"/>
+        <parameter name="sides" value="0"/>
+        <parameter name="material" value="SS304LSteel"/>
+        <parameter name="type" value="dielectric_metal"/>
+        <parameter name="surface" value="1"/>
+      </detector>
+      <detector type="MeshGrid" name="Gate" parent="lxenon">
+        <parameter name="soliname" value="GateSolid"/>
+        <parameter name="logivol" value="GateLog"/>
+        <parameter name="physvol" value="Gate"/>
+        <parameter name="shift_z" value="77.6*mm"/>
+        <parameter name="radius" value="77.5*mm"/>
+        <parameter name="wire_diameter" value="0.1*mm"/>
+        <parameter name="wire_pitch" value="2.887*mm"/>
+        <parameter name="sides" value="0"/>
+        <parameter name="material" value="SS304LSteel"/>
+        <parameter name="type" value="dielectric_metal"/>
+        <parameter name="surface" value="1"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+      <detector type="MeshGrid" name="Cathode" parent="lxenon">
+        <parameter name="soliname" value="CathodeSolid"/>
+        <parameter name="logivol" value="CathodeLog"/>
+        <parameter name="physvol" value="Cathode"/>
+        <parameter name="shift_z" value="-62.5*mm"/>
+        <parameter name="radius" value="77.5*mm"/>
+        <parameter name="wire_diameter" value="0.1*mm"/>
+        <parameter name="wire_pitch" value="2.887*mm"/>
+        <parameter name="sides" value="0"/>
+        <parameter name="material" value="SS304LSteel"/>
+        <parameter name="type" value="dielectric_metal"/>
+        <parameter name="surface" value="1"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+      <detector type="MeshGrid" name="BottomScreening" parent="lxenon">
+        <parameter name="soliname" value="BottomScreeningSolid"/>
+        <parameter name="logivol" value="BottomScreeningLog"/>
+        <parameter name="physvol" value="BottomScreening"/>
+        <parameter name="shift_z" value="-77.6*mm"/>
+        <parameter name="radius" value="77.5*mm"/>
+        <parameter name="wire_diameter" value="0.1*mm"/>
+        <parameter name="wire_pitch" value="5.774*mm"/>
+        <parameter name="sides" value="0"/>
+        <parameter name="material" value="SS304LSteel"/>
+        <parameter name="type" value="dielectric_metal"/>
+        <parameter name="surface" value="1"/>
+        <parameter name="check_overlap" value="1"/>
+      </detector>
+    </geometry>
+    <physics name="RelicsOpticalPhysics">
+      <parameter name="cutlength" value="0.1*mm"/>
+    </physics>
+    <generator name="ConfineGenerator"/>
+    <analysis name="RelicsOpticalAnalysis">
+      <parameter name="EnableEnergyDeposition" value="0"/>
+      <parameter name="EnablePrimaryParticle" value="1"/>
+      <parameter name="SaveNullEvents" value="1"/>
+      <parameter name="OpticalSdName" value="bR8520"/>
+      <parameter name="UserSeed" value="0"/>
+      <parameter name="GetGeoMass" value="0"/>
+    </analysis>
+  </BambooMC>

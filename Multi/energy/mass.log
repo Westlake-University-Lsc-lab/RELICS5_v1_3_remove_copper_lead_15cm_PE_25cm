@@ -1,0 +1,33 @@
+                    World:                   G4_AIR:                  1203.32 kg:                  1.20479 mg/cm3:                     1000 m3 :                      600 m2    
+                     Lead:                    G4_Pb:                  3578.09 kg:                    11.35 g/cm3 :                  1.21837 m3 :                    6.935 m2    
+                   Copper:                   Copper:                  2285.75 kg:                     8.92 g/cm3 :                  903.125 L  :                    5.695 m2    
+                  InnerPE:          G4_POLYETHYLENE:                  446.265 kg:                      940 mg/cm3:                  646.875 L  :                    4.575 m2    
+                      Air:                   G4_AIR:                  119.874 g :                  1.20479 mg/cm3:                  172.125 L  :                    1.935 m2    
+                   Flange:                   Flange:                  343.224 g :                        8 g/cm3 :                  4.29031 cL :                   104.47 cm2   
+           OuterContainer:              SS304LSteel:                  18.0959 kg:                        8 g/cm3 :                   67.676 L  :                  9594.81 cm2   
+                   Vacuum:                   Vacuum:              3.86927e-13 mg:                    1e-17 mg/cm3:                   65.414 L  :                  9400.12 cm2   
+           InnerContainer:              SS304LSteel:                  8.51623 kg:                        8 g/cm3 :                  22.8018 L  :                  4604.26 cm2   
+                 OuterGXe:                      GXe:                  54.1596 g :                    5.887 mg/cm3:                  10.1103 L  :                  2596.79 cm2   
+                TeflonGas:                   Teflon:                  153.138 g :                      2.2 g/cm3 :                  5.43225 dL :                  563.746 cm2   
+                 gasxenon:                      GXe:                  2.62763 g :                    5.887 mg/cm3:                  4.73617 dL :                  499.607 cm2   
+                    Anode:              SS304LSteel:                  650.319 mg:                        8 g/cm3 :                  81.2898 mm3:                  29.3995 cm2   
+                TopTeflon:                TeflonGas:                  59.8211 g :                      2.2 g/cm3 :                  2.71914 cL :                  267.052 cm2   
+                    R8520:                      GXe:               0.00121973 mg:                    5.887 mg/cm3:                  1.93248 cL :                   55.432 cm2   
+                     Base:                   Cirlex:                  1.38387 g :                     1.43 g/cm3 :                   967.74 mm3:                  14.4272 cm2   
+                   Window:                   Quartz:                  2.06344 g :                    2.201 g/cm3 :                    937.5 mm3:                       14 cm2   
+                   Casing:              SS304LSteel:                  13.5837 g :                        8 g/cm3 :                  1.74193 cL :                  40.3352 cm2   
+                 Interior:                   Vacuum:              1.54794e-16 mg:                    1e-17 mg/cm3:                  1.54794 cL :                  37.2832 cm2   
+             PhotoCathode:    PhotoCathodeAluminium:                    1.936 g :                        8 g/cm3 :                      242 mm3:                    10.12 cm2   
+                 OuterLXe:                      LXe:                  21.6433 kg:                    2.862 g/cm3 :                   11.627 L  :                  2841.43 cm2   
+             Shapingrings:                   Copper:                  119.798 g :                     8.92 g/cm3 :                  1.34303 cL :                  107.442 cm2   
+                   Teflon:                   Teflon:                  978.011 g :                      2.2 g/cm3 :                  3.46928 L  :                  1268.82 cm2   
+                   lxenon:                      LXe:                  8.57839 kg:                    2.862 g/cm3 :                  3.02473 L  :                  1157.96 cm2   
+                BotTeflon:                   Teflon:                   59.887 g :                      2.2 g/cm3 :                  2.72214 cL :                  270.354 cm2   
+          BottomScreening:              SS304LSteel:                  226.089 mg:                        8 g/cm3 :                  28.2612 mm3:                  14.0738 cm2   
+                  Cathode:              SS304LSteel:                  560.915 mg:                        8 g/cm3 :                  70.1144 mm3:                  30.1816 cm2   
+                     Gate:              SS304LSteel:                  561.886 mg:                        8 g/cm3 :                  70.2357 mm3:                  30.1816 cm2   
+     InnerContainerBottom:              SS304LSteel:                   15.678 kg:                        8 g/cm3 :                  1.95975 L  :                  1709.53 cm2   
+        InnerContainerTop:              SS304LSteel:                   15.678 kg:                        8 g/cm3 :                  1.95975 L  :                  1709.53 cm2   
+     OuterContainerBottom:              SS304LSteel:                  6.37045 kg:                        8 g/cm3 :                  7.96306 dL :                  2080.24 cm2   
+        OuterContainerTop:              SS304LSteel:                   30.276 kg:                        8 g/cm3 :                   3.7845 L  :                   4132.5 cm2   
+                     Pipe:              SS304LSteel:                  150.248 g :                        8 g/cm3 :                   1.8781 cL :                  231.427 cm2   

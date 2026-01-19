@@ -1,0 +1,405 @@
+{
+	"run": 0,
+	"geometry": {
+		"material": {
+			"name": "Material",
+			"parameters": {
+				"LXe_SCINTILLATIONYIELD": "1000000.",
+				"LXe_RESOLUTIONSCALE": "0.",
+				"LXe_ABSLENGTH": "6.91 5000 6.98 5000 7.05 5000",
+				"GXe_ABSLENGTH": "6.91 20000 6.98 20000 7.05 20000",
+				"SS304LSteel_REFLECTIVITY": "1 0.57 5 0.57",
+				"Quartz_RINDEX": "1 1.70 6.9 1.70 6.91 1.70 6.98 1.70 7.05 1.70",
+				"Teflon_REFLECTIVITY": "6.91 0.95 6.98 0.95 7.05 0.95",
+				"TeflonGas_REFLECTIVITY": "6.91 0.70 6.98 0.70 7.05 0.70",
+				"Teflon_SPECULARLOBECONSTANT": "6.91 0.01 6.98 0.01 7.05 0.01",
+				"TeflonGas_SPECULARLOBECONSTANT": "6.91 0.01 6.98 0.01 7.05 0.01",
+				"LXe_RINDEX": "6.91 1.69 6.98 1.69 7.05 1.69"
+			}
+		},
+		"detectors": [
+			{
+				"type": "World",
+				"name": "World",
+				"parameters": {
+					"half_x": "500*cm",
+					"half_y": "500*cm",
+					"half_z": "500*cm"
+				}
+			},
+			{
+				"type": "Cuboid",
+				"name": "Lead",
+				"parent": "World",
+				"parameters": {
+					"soliname": "LeadSolid",
+					"logivol": "LeadLog",
+					"physvol": "Lead",
+					"width_x": "950*mm",
+					"width_y": "950*mm",
+					"width_z": "1350*mm",
+					"material": "G4_Pb",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cuboid",
+				"name": "Copper",
+				"parent": "Lead",
+				"parameters": {
+					"soliname": "CopperSolid",
+					"logivol": "CopperLog",
+					"physvol": "Copper",
+					"width_x": "850*mm",
+					"width_y": "850*mm",
+					"width_z": "1250*mm",
+					"material": "Copper",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cuboid",
+				"name": "InnerPE",
+				"parent": "Copper",
+				"parameters": {
+					"soliname": "InnerPESolid",
+					"logivol": "InnerPELog",
+					"physvol": "InnerPE",
+					"width_x": "750*mm",
+					"width_y": "750*mm",
+					"width_z": "1150*mm",
+					"material": "G4_POLYETHYLENE",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cylinder",
+				"name": "OuterContainer",
+				"parent": "InnerPE",
+				"parameters": {
+					"soliname": "OuterContainerSolid",
+					"logivol": "OuterContainerLog",
+					"physvol": "OuterContainer",
+					"radius": "200*mm",
+					"height": "700*mm",
+					"material": "SS304LSteel",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cylinder",
+				"name": "Vacuum",
+				"parent": "OuterContainer",
+				"parameters": {
+					"soliname": "VacuumSolid",
+					"logivol": "VacuumLog",
+					"physvol": "Vacuum",
+					"radius": "175*mm",
+					"height": "679.9*mm",
+					"material": "Vacuum",
+					"shift_z": "0*mm",
+					"surface": "0*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cylinder",
+				"name": "InnerContainer",
+				"parent": "Vacuum",
+				"parameters": {
+					"soliname": "InnerContainerSolid",
+					"logivol": "InnerContainerLog",
+					"physvol": "InnerContainer",
+					"radius": "180*mm",
+					"height": "680*mm",
+					"material": "SS304LSteel",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cylinder",
+				"name": "OuterGXe",
+				"parent": "InnerContainer",
+				"parameters": {
+					"soliname": "OuterGXeSolid",
+					"logivol": "OuterGXeLog",
+					"physvol": "OuterGXe",
+					"radius": "124*mm",
+					"height": "209.3*mm",
+					"material": "GXe",
+					"shift_z": "120.35*mm",
+					"surface": "0*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cylinder",
+				"name": "OuterLXe",
+				"parent": "InnerContainer",
+				"parameters": {
+					"soliname": "OuterLXeSolid",
+					"logivol": "OuterLXeLog",
+					"physvol": "OuterLXe",
+					"radius": "124*mm",
+					"height": "240.7*mm",
+					"material": "LXe",
+					"shift_z": "-104.65*mm",
+					"surface": "0*mm",
+					"sendname": "OuterLXe",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Array",
+				"name": "tR8520",
+				"parent": "OuterGXe",
+				"parameters": {
+					"soliname": "tR8520Solid",
+					"logivol": "tR8520Log",
+					"physvol": "tR8520",
+					"objects": "PMTsR8520",
+					"source": "data/topPMT.txt",
+					"sendname": "bR8520",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Array",
+				"name": "bR8520",
+				"parent": "OuterLXe",
+				"parameters": {
+					"soliname": "bR8520Solid",
+					"logivol": "bR8520Log",
+					"physvol": "bR8520",
+					"objects": "PMTsR8520",
+					"source": "data/botPMT.txt",
+					"sendname": "tR8520",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cylinder",
+				"name": "Teflon",
+				"parent": "OuterLXe",
+				"parameters": {
+					"soliname": "TeflonSolid",
+					"logivol": "TeflonLog",
+					"physvol": "Teflon",
+					"radius": "83*mm",
+					"height": "160.3*mm",
+					"material": "Teflon",
+					"shift_z": "40.2*mm",
+					"surface": "1*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Array",
+				"name": "Shapingrings",
+				"parent": "OuterLXe",
+				"parameters": {
+					"soliname": "ShapingringsSolid",
+					"logivol": "ShapingringsLog",
+					"physvol": "Shapingrings",
+					"objects": "Tube",
+					"outer_radius": "88*mm",
+					"inner_radius": "83.000000001*mm",
+					"height": "5*mm",
+					"material": "Copper",
+					"source": "data/shaping_rings.txt",
+					"surface": "0*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cylinder",
+				"name": "lxenon",
+				"parent": "Teflon",
+				"parameters": {
+					"soliname": "lxenonSolid",
+					"logivol": "lxenonLog",
+					"physvol": "lxenon",
+					"radius": "77.5*mm",
+					"height": "160.3*mm",
+					"material": "LXe",
+					"shift_z": "0*mm",
+					"surface": "0*mm",
+					"sendname": "lxenon",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cylinder",
+				"name": "TeflonGas",
+				"parent": "OuterGXe",
+				"parameters": {
+					"soliname": "TeflonGasSolid",
+					"logivol": "TeflonGasLog",
+					"physvol": "TeflonGas",
+					"radius": "83*mm",
+					"height": "25.1*mm",
+					"material": "TeflonGas",
+					"shift_z": "-92.1*mm",
+					"surface": "1*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "Cylinder",
+				"name": "gasxenon",
+				"parent": "TeflonGas",
+				"parameters": {
+					"soliname": "gasxenonSolid",
+					"logivol": "gasxenonLog",
+					"physvol": "gasxenon",
+					"radius": "77.5*mm",
+					"height": "25.1*mm",
+					"material": "GXe",
+					"shift_z": "0*mm",
+					"surface": "0*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "HolesBoard",
+				"name": "TopTeflon",
+				"parent": "gasxenon",
+				"parameters": {
+					"soliname": "TopTeflonSolid",
+					"logivol": "TopTeflonLog",
+					"physvol": "TopTeflon",
+					"radius": "77.5*mm",
+					"height": "2.5*mm",
+					"width_x": "20.5*mm",
+					"sides": "0*mm",
+					"material": "TeflonGas",
+					"shift_z": "11.3*mm",
+					"source": "data/topTeflon.txt",
+					"surface": "1*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "HolesBoard",
+				"name": "BotTeflon",
+				"parent": "lxenon",
+				"parameters": {
+					"soliname": "BotTeflonSolid",
+					"logivol": "BotTeflonLog",
+					"physvol": "BotTeflon",
+					"radius": "77.5*mm",
+					"height": "2.5*mm",
+					"width_x": "20.5*mm",
+					"sides": "0*mm",
+					"material": "Teflon",
+					"shift_z": "-78.9*mm",
+					"source": "data/botTeflon.txt",
+					"surface": "1*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "MeshGrid",
+				"name": "Anode",
+				"parent": "gasxenon",
+				"parameters": {
+					"soliname": "AnodeSolid",
+					"logivol": "AnodeLog",
+					"physvol": "Anode",
+					"radius": "77.5*mm",
+					"wire_diameter": "0.1*mm",
+					"wire_pitch": "2.887*mm",
+					"sides": "0*mm",
+					"material": "SS304LSteel",
+					"type": "dielectric_metal",
+					"surface": "1*mm",
+					"shift_z": "-10*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "MeshGrid",
+				"name": "Gate",
+				"parent": "lxenon",
+				"parameters": {
+					"soliname": "GateSolid",
+					"logivol": "GateLog",
+					"physvol": "Gate",
+					"radius": "77.5*mm",
+					"wire_diameter": "0.1*mm",
+					"wire_pitch": "2.887*mm",
+					"sides": "0*mm",
+					"material": "SS304LSteel",
+					"type": "dielectric_metal",
+					"surface": "1*mm",
+					"shift_z": "77.6*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "MeshGrid",
+				"name": "Cathode",
+				"parent": "lxenon",
+				"parameters": {
+					"soliname": "CathodeSolid",
+					"logivol": "CathodeLog",
+					"physvol": "Cathode",
+					"radius": "77.5*mm",
+					"wire_diameter": "0.1*mm",
+					"wire_pitch": "2.887*mm",
+					"sides": "0*mm",
+					"material": "SS304LSteel",
+					"type": "dielectric_metal",
+					"surface": "1*mm",
+					"shift_z": "-62.5*mm",
+					"check_overlap": "1"
+				}
+			},
+			{
+				"type": "MeshGrid",
+				"name": "BottomScreening",
+				"parent": "lxenon",
+				"parameters": {
+					"soliname": "BottomScreeningSolid",
+					"logivol": "BottomScreeningLog",
+					"physvol": "BottomScreening",
+					"radius": "77.5*mm",
+					"wire_diameter": "0.1*mm",
+					"wire_pitch": "5.774*mm",
+					"sides": "0*mm",
+					"material": "SS304LSteel",
+					"type": "dielectric_metal",
+					"surface": "1*mm",
+					"shift_z": "-77.6*mm",
+					"check_overlap": "1"
+				}
+			}
+		]
+	},
+	"physics": {
+		"name": "PandaXPhysics",
+		"parameters": {
+			"cutlength": "0.1*mm"
+		}
+	},
+	"generator": {
+		"name": "NeutronGenerator",
+		"parameters": {
+			"shielding_x": "100*cm",
+			"shielding_z": "67.5*cm"
+		}
+	},
+	"analysis": {
+		"name": "PandaXAnalysis",
+		"parameters": {
+			"EnableEnergyDeposition": 1,
+			"EnableSurfaceFlux": 0,
+			"EnablePrimaryParticle": 1,
+			"SaveNullEvents": 0,
+			"EnableDecayChainSplitting": 1,
+			"ChainSplittingLifeTime": "400*us",
+			"UserSeed": "0",
+			"GetGeoMass": 0
+		}
+	}
+}
