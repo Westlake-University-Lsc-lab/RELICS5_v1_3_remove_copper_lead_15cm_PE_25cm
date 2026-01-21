@@ -1,36 +1,36 @@
 #pragma once
 
+#include <G4Event.hh>
+#include <TFile.h>
+
 #include <string>
 #include <vector>
-
-#include <TFile.h>
-#include <G4Event.hh>
 
 class TTree;
 
 // class G4Event;
 
-class RelicsOpticalDataManager {
-
+class RelicsOpticalDataManager
+{
     friend class RelicsOpticalRunAction;
     friend class RelicsOpticalEventAction;
     // friend class RelicsAnalysis;
 
   private:
     RelicsOpticalDataManager() = default;
-    RelicsOpticalDataManager(const RelicsOpticalDataManager &) = delete;
-    RelicsOpticalDataManager &
-    operator=(const RelicsOpticalDataManager &) = delete;
+    RelicsOpticalDataManager(const RelicsOpticalDataManager&) = delete;
+    RelicsOpticalDataManager& operator=(const RelicsOpticalDataManager&) = delete;
 
   public:
-    static RelicsOpticalDataManager &getInstance() {
-        static RelicsOpticalDataManager instance;
-        return instance;
+    static RelicsOpticalDataManager& getInstance()
+    {
+      static RelicsOpticalDataManager instance;
+      return instance;
     }
 
     ~RelicsOpticalDataManager();
 
-    void book(const std::string &name = "relicsout.root");
+    void book(const std::string& name = "relicsout.root");
 
     void save();
 
@@ -40,13 +40,13 @@ class RelicsOpticalDataManager {
     void setRecordPrimaryParticle(bool t) { recordPrimaryParticle = t; }
     void setRecordNullEvent(bool t) { recordNullEvent = t; }
 
-    void fillEvent(const G4Event *aEvent);
+    void fillEvent(const G4Event* aEvent);
 
   private:
     void resetData();
 
-    TFile *rootFile = nullptr;
-    TTree *mcTree = nullptr;
+    TFile* rootFile = nullptr;
+    TTree* mcTree = nullptr;
 
     int runId;
     int eventId;

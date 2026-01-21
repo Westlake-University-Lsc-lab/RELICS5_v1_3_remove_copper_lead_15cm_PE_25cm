@@ -5,12 +5,12 @@
 #include "BambooFactory.hh"
 #include "Monoblock.hh"
 
-class Cuboid : public Monoblock {
-
+class Cuboid : public Monoblock
+{
   public:
-    Cuboid(const std::string &n, const BambooParameters &pars);
+    Cuboid(const std::string& n, const BambooParameters& pars);
 
-    bool constructMainLV(const BambooParameters &global_pars);
+    bool constructMainLV(const BambooParameters& global_pars);
 
     static DetectorRegister<Cuboid, std::string, BambooParameters> reg;
 
@@ -19,4 +19,3 @@ class Cuboid : public Monoblock {
 
   protected:
 };
-

@@ -5,7 +5,6 @@
 #include <G4EmLivermorePhysics.hh>
 #include <G4EmParameters.hh>
 #include <G4EmStandardPhysics.hh>
-#include <G4EmStandardPhysics_option4.hh>
 #include <G4HadronElasticPhysicsHP.hh>
 #include <G4HadronElasticPhysicsLEND.hh>
 #include <G4HadronPhysicsShielding.hh>
@@ -16,60 +15,62 @@
 #include <G4RadioactiveDecayPhysics.hh>
 #include <G4StoppingPhysics.hh>
 #include <G4SystemOfUnits.hh>
-#include <QString>
 #include <Shielding.hh>
 
-PhysicsRegister<PandaXOpticalPhysics>
-    PandaXOpticalPhysics::reg("PandaXOpticalPhysics");
+#include <QString>
 
-PandaXOpticalPhysics::PandaXOpticalPhysics(const BambooParameters &pars)
-    : BambooPhysics(pars) {
+#include <G4EmStandardPhysics_option4.hh>
 
-    auto cut_length = physicsParameters.evaluateParameter("cutlength");
+PhysicsRegister<PandaXOpticalPhysics> PandaXOpticalPhysics::reg("PandaXOpticalPhysics");
 
-    if (cut_length == 0) {
-        cut_length = 0.1 * mm;
-    }
-    defaultCutValue = cut_length;
-    G4cout << "default cut length: " << cut_length / mm << " mm" << G4endl;
+PandaXOpticalPhysics::PandaXOpticalPhysics(const BambooParameters& pars) : BambooPhysics(pars)
+{
+  auto cut_length = physicsParameters.evaluateParameter("cutlength");
 
-    auto verbose = physicsParameters.getParameter<int>("verbose");
+  if (cut_length == 0)
+  {
+    cut_length = 0.1 * mm;
+  }
+  defaultCutValue = cut_length;
+  G4cout << "default cut length: " << cut_length / mm << " mm" << G4endl;
 
-    // EM Physics
-    RegisterPhysics(new G4EmLivermorePhysics(verbose));
+  auto verbose = physicsParameters.getParameter<int>("verbose");
 
-    // Synchroton Radiation & GN Physics
-    RegisterPhysics(new G4EmExtraPhysics(verbose));
+  // EM Physics
+  RegisterPhysics(new G4EmLivermorePhysics(verbose));
 
-    // Decays
-    RegisterPhysics(new G4DecayPhysics(verbose));
+  // Synchroton Radiation & GN Physics
+  RegisterPhysics(new G4EmExtraPhysics(verbose));
 
-    RegisterPhysics(new G4RadioactiveDecayPhysics(verbose));
+  // Decays
+  RegisterPhysics(new G4DecayPhysics(verbose));
 
-    // hadron physics
-    RegisterPhysics(new G4HadronElasticPhysicsHP(verbose));
+  RegisterPhysics(new G4RadioactiveDecayPhysics(verbose));
 
-    // shielding, changed api for different version of geant4.
-    RegisterPhysics(new G4HadronPhysicsShielding(verbose));
+  // hadron physics
+  RegisterPhysics(new G4HadronElasticPhysicsHP(verbose));
 
-    // stopping physics
-    RegisterPhysics(new G4StoppingPhysics(verbose));
+  // shielding, changed api for different version of geant4.
+  RegisterPhysics(new G4HadronPhysicsShielding(verbose));
 
-    // ion physics
-    RegisterPhysics(new G4IonQMDPhysics(verbose));
+  // stopping physics
+  RegisterPhysics(new G4StoppingPhysics(verbose));
 
-    // Optical Physics
-    G4OpticalPhysics *opticalPhysics = new G4OpticalPhysics();
-    RegisterPhysics(opticalPhysics);
+  // ion physics
+  RegisterPhysics(new G4IonQMDPhysics(verbose));
 
-    opticalPhysics->SetWLSTimeProfile("delta");
+  // Optical Physics
+  G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
+  RegisterPhysics(opticalPhysics);
 
-    opticalPhysics->SetScintillationYieldFactor(1.0);
-    opticalPhysics->SetScintillationExcitationRatio(0.0);
+  opticalPhysics->SetWLSTimeProfile("delta");
 
-    opticalPhysics->SetMaxNumPhotonsPerStep(100);
-    opticalPhysics->SetMaxBetaChangePerStep(10.0);
+  opticalPhysics->SetScintillationYieldFactor(1.0);
+  opticalPhysics->SetScintillationExcitationRatio(0.0);
 
-    opticalPhysics->SetTrackSecondariesFirst(kCerenkov, true);
-    opticalPhysics->SetTrackSecondariesFirst(kScintillation, true);
+  opticalPhysics->SetMaxNumPhotonsPerStep(100);
+  opticalPhysics->SetMaxBetaChangePerStep(10.0);
+
+  opticalPhysics->SetTrackSecondariesFirst(kCerenkov, true);
+  opticalPhysics->SetTrackSecondariesFirst(kScintillation, true);
 }

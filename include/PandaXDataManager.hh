@@ -1,21 +1,22 @@
 #pragma once
 
+#include <TFile.h>
+
 #include <string>
 #include <vector>
-
-#include <TFile.h>
 
 class TTree;
 
 class G4Event;
 
-class TemporaryParticle {
+class TemporaryParticle
+{
   public:
     TemporaryParticle() = default;
     ~TemporaryParticle() = default;
 
-    const std::string &getParticleType() const { return type; }
-    void setParticleType(const std::string &s) { type = s; }
+    const std::string& getParticleType() const { return type; }
+    void setParticleType(const std::string& s) { type = s; }
 
     int getId() const { return id; }
     void setId(int i) { id = i; }
@@ -53,26 +54,27 @@ class TemporaryParticle {
     double z;
 };
 
-class PandaXDataManager {
-
+class PandaXDataManager
+{
     friend class PandaXRunAction;
     friend class PandaXEventAction;
     friend class PandaXAnalysis;
 
   private:
     PandaXDataManager() = default;
-    PandaXDataManager(const PandaXDataManager &) = delete;
-    PandaXDataManager &operator=(const PandaXDataManager &) = delete;
+    PandaXDataManager(const PandaXDataManager&) = delete;
+    PandaXDataManager& operator=(const PandaXDataManager&) = delete;
 
   public:
-    static PandaXDataManager &getInstance() {
-        static PandaXDataManager instance;
-        return instance;
+    static PandaXDataManager& getInstance()
+    {
+      static PandaXDataManager instance;
+      return instance;
     }
 
     ~PandaXDataManager();
 
-    void book(const std::string &name = "pandaxout.root");
+    void book(const std::string& name = "pandaxout.root");
 
     void save();
 
@@ -83,25 +85,25 @@ class PandaXDataManager {
     void setRecordPrimaryParticle(bool t) { recordPrimaryParticle = t; }
     void setRecordNullEvent(bool t) { recordNullEvent = t; }
 
-    void fillEvent(const G4Event *aEvent, bool partial = false);
+    void fillEvent(const G4Event* aEvent, bool partial = false);
 
-    void addTemporaryParticle(const TemporaryParticle &tp);
+    void addTemporaryParticle(const TemporaryParticle& tp);
 
   private:
     void resetData();
 
     //! reset the hits collection of the event
-    void resetPartialEvent(const G4Event *aEvent);
+    void resetPartialEvent(const G4Event* aEvent);
 
-    TFile *rootFile = nullptr;
-    TTree *mcTree = nullptr;
+    TFile* rootFile = nullptr;
+    TTree* mcTree = nullptr;
 
     int runId;
     int eventId;
     int64_t seed;
 
     // variables for the energy deposition.
-    int nHits;
+    size_t nHits;
     double totalEnergy;
     std::vector<int> trackId;
     std::vector<int> parentId;
@@ -117,7 +119,7 @@ class PandaXDataManager {
     std::vector<double> energy;
 
     // variables for flux counts
-    int nTracks;
+    size_t nTracks;
     std::vector<double> trackEnergy;
     std::vector<std::string> trackName;
     std::vector<std::string> trackParent;
@@ -130,7 +132,7 @@ class PandaXDataManager {
     std::vector<double> track_z;
 
     // variables for primary particle
-    int nPrimaries;
+    size_t nPrimaries;
     std::vector<std::string> primaryType;
     std::vector<int> primaryId;
     std::vector<double> primaryEnergy;

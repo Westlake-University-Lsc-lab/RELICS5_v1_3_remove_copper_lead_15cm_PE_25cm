@@ -1,17 +1,16 @@
 #pragma once
 
-#include "BambooMaterial.hh"
 #include "BambooFactory.hh"
+#include "BambooMaterial.hh"
 
-class SampleMaterial : public BambooMaterial {
-
+class SampleMaterial : public BambooMaterial
+{
   public:
     SampleMaterial() = default;
 
-    virtual void defineMaterials(const BambooParameters &pars);
+    virtual void defineMaterials(const BambooParameters& pars);
 
     static MaterialRegister<SampleMaterial> reg;
 
   private:
 };
-

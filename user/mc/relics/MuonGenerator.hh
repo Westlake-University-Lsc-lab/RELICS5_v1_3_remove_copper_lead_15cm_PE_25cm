@@ -2,7 +2,6 @@
 
 #include "BambooFactory.hh"
 #include "BambooGenerator.hh"
-
 #include <G4ParticleGun.hh>
 
 #include <memory>
@@ -10,13 +9,14 @@
 class G4ParticleGun;
 class G4Event;
 
-class MuonGenerator : public BambooGenerator {
+class MuonGenerator : public BambooGenerator
+{
   public:
-    MuonGenerator(const BambooParameters &pars);
+    MuonGenerator(const BambooParameters& pars);
 
     ~MuonGenerator() = default;
 
-    virtual void GeneratePrimaries(G4Event *anEvent);
+    virtual void GeneratePrimaries(G4Event* anEvent);
 
     static GeneratorRegister<MuonGenerator> reg;
 

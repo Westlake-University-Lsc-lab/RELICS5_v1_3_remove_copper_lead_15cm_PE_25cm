@@ -9,17 +9,18 @@
 
 using std::string;
 
-class RelicsOpticalHit : public G4VHit {
+class RelicsOpticalHit : public G4VHit
+{
   public:
     RelicsOpticalHit() = default;
     ~RelicsOpticalHit() = default;
 
-    const RelicsOpticalHit &operator=(const RelicsOpticalHit &right);
-    G4int operator==(const RelicsOpticalHit &right) const;
+    const RelicsOpticalHit& operator=(const RelicsOpticalHit& right);
+    G4int operator==(const RelicsOpticalHit& right) const;
 
-    inline void *operator new(size_t);
+    inline void* operator new(size_t);
 
-    inline void operator delete(void *aHit);
+    inline void operator delete(void* aHit);
 
     void Draw() {}
     void Print() {}
@@ -30,11 +31,11 @@ class RelicsOpticalHit : public G4VHit {
     void setEnergy(double v) { energy = v; }
     double getEnergy() const { return energy; }
 
-    void setPosition(const G4ThreeVector &v) { pos = v; }
-    const G4ThreeVector &getPosition() const { return pos; }
+    void setPosition(const G4ThreeVector& v) { pos = v; }
+    const G4ThreeVector& getPosition() const { return pos; }
 
-    void setCreatorProcess(const string &s) { creatorProcess = s; }
-    const string &getCreatorProcess() const { return creatorProcess; }
+    void setCreatorProcess(const string& s) { creatorProcess = s; }
+    const string& getCreatorProcess() const { return creatorProcess; }
 
     void setGlobalTime(double v) { t_global = v; }
     double getGlobalTime() const { return t_global; }
@@ -48,11 +49,11 @@ class RelicsOpticalHit : public G4VHit {
     void setVelocity(double v) { velocity = v; }
     double getVelocity() const { return velocity; }
 
-    void setSourcePos(const G4ThreeVector &v) { source_pos = v; }
-    const G4ThreeVector &getSourcePos() const { return source_pos; }
+    void setSourcePos(const G4ThreeVector& v) { source_pos = v; }
+    const G4ThreeVector& getSourcePos() const { return source_pos; }
 
-    void setParent(const std::string &s) { parent = s; }
-    const std::string &getParent() { return parent; }
+    void setParent(const std::string& s) { parent = s; }
+    const std::string& getParent() { return parent; }
 
     void setParentId(int n) { parentId = n; }
     int getParentId() { return parentId; }
@@ -74,14 +75,15 @@ class RelicsOpticalHit : public G4VHit {
 
 using RelicsOpticalHitsCollection = G4THitsCollection<RelicsOpticalHit>;
 
-extern G4ThreadLocal G4Allocator<RelicsOpticalHit> *RelicsOpticalHitAllocator;
+extern G4ThreadLocal G4Allocator<RelicsOpticalHit>* RelicsOpticalHitAllocator;
 
-inline void *RelicsOpticalHit::operator new(size_t) {
-    if (!RelicsOpticalHitAllocator)
-        RelicsOpticalHitAllocator = new G4Allocator<RelicsOpticalHit>;
-    return (void *)RelicsOpticalHitAllocator->MallocSingle();
+inline void* RelicsOpticalHit::operator new(size_t)
+{
+  if (!RelicsOpticalHitAllocator) RelicsOpticalHitAllocator = new G4Allocator<RelicsOpticalHit>;
+  return (void*)RelicsOpticalHitAllocator->MallocSingle();
 }
 
-inline void RelicsOpticalHit::operator delete(void *aHit) {
-    RelicsOpticalHitAllocator->FreeSingle((RelicsOpticalHit *)aHit);
+inline void RelicsOpticalHit::operator delete(void* aHit)
+{
+  RelicsOpticalHitAllocator->FreeSingle((RelicsOpticalHit*)aHit);
 }

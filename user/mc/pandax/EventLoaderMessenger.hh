@@ -11,15 +11,16 @@
 
 class EventLoader;
 
-class EventLoaderMessenger : public G4UImessenger {
+class EventLoaderMessenger : public G4UImessenger
+{
   public:
-    EventLoaderMessenger(EventLoader *loader);
+    EventLoaderMessenger(EventLoader* loader);
     virtual ~EventLoaderMessenger() = default;
 
-    virtual void SetNewValue(G4UIcommand *command, G4String newValues);
+    virtual void SetNewValue(G4UIcommand* command, G4String newValues);
 
   private:
-    EventLoader *myLoader;
+    EventLoader* myLoader;
     std::unique_ptr<G4UIdirectory> loaderDir;
     std::unique_ptr<G4UIcmdWithAString> shapeCmd;
     std::unique_ptr<G4UIcmdWithAString> confineCmd;

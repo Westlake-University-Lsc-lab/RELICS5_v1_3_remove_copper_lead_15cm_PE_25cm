@@ -4,15 +4,14 @@
 #include "BambooDetector.hh"
 #include "BambooFactory.hh"
 
-class Monoblock : public BambooDetector {
-
+class Monoblock : public BambooDetector
+{
   public:
+    Monoblock(const std::string& n, const BambooParameters& pars) : BambooDetector(n, pars) {}
 
-    Monoblock (const std::string &n, const BambooParameters &pars) : BambooDetector(n, pars) {}
+    virtual bool construct(const BambooParameters& global_pars, BambooDetector* parent);
 
-    virtual bool construct(const BambooParameters &global_pars, BambooDetector *parent);
-
-    virtual bool constructMainLV(const BambooParameters &global_pars) = 0;
+    virtual bool constructMainLV(const BambooParameters& global_pars) = 0;
 
     auto getContainerPV() { return containerPV; }
 
@@ -20,6 +19,5 @@ class Monoblock : public BambooDetector {
     // define additional parameters here
 
   protected:
-    G4VPhysicalVolume *containerPV = nullptr;
+    G4VPhysicalVolume* containerPV = nullptr;
 };
-

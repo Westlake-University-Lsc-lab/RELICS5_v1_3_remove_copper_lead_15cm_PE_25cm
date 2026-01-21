@@ -6,8 +6,7 @@ else
     echo "Using customized geometry setting $GEO"
 fi
 
-export RELICSSIM=/public/home/yyy/RELICS5各个版本/RELICS5_v1/RELICS5_v1_3_remove_copper_lead_15cm_PE_25cm     # Need update
-export ANALYSIS=/public/home/yyy/RELICS5各个版本/RELICS5_v1/RELICS5_v1_3_remove_copper_lead_15cm_PE_25cm/Multi/energy  # Need update
+export ANALYSIS=${RELICSSIM}/Multi/energy  # Need update
 # export PYTHONPATH="$RELICSSIM/scripts:$PYTHONPATH"
 
 parallel=50
@@ -32,7 +31,7 @@ jq -n ".N=$(expr $files \* $events)" > $norm
 
 
 # # Neutron when reactor ON and OFF
-export FOLDER=/public/home/yyy/RELICS5各个版本/RELICS5_v1/RELICS5_v1_3_remove_copper_lead_15cm_PE_25cm/result/NeutronOFF_60M
+export FOLDER=${RELICSSIM}/result/NeutronOFF_60M
 reactors="OFF"
 topsides="TOP"
 for reactor in $reactors; do

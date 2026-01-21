@@ -1,11 +1,12 @@
 #pragma once
 
-#include "BambooFactory.hh"
 #include "BambooAnalysis.hh"
+#include "BambooFactory.hh"
 
-class PandaXOpticalAnalysis : public BambooAnalysis {
+class PandaXOpticalAnalysis : public BambooAnalysis
+{
   public:
-    PandaXOpticalAnalysis(const BambooParameters &pars);
+    PandaXOpticalAnalysis(const BambooParameters& pars);
 
     ~PandaXOpticalAnalysis() = default;
 

@@ -2,7 +2,6 @@
 
 #include "BambooFactory.hh"
 #include "BambooGenerator.hh"
-
 #include <G4ParticleGun.hh>
 
 #include <memory>
@@ -10,20 +9,22 @@
 class G4ParticleGun;
 class G4Event;
 
-class NeutronGenerator : public BambooGenerator {
+class NeutronGenerator : public BambooGenerator
+{
   public:
-    NeutronGenerator(const BambooParameters &pars);
+    NeutronGenerator(const BambooParameters& pars);
 
     ~NeutronGenerator() = default;
 
-    virtual void GeneratePrimaries(G4Event *anEvent);
+    virtual void GeneratePrimaries(G4Event* anEvent);
 
     static GeneratorRegister<NeutronGenerator> reg;
 
   private:
     G4double shielding_x;
     G4double shielding_z;
-    void NeutronLoad(const std::string& energySpectrumFile, const std::string& angularDistributionFile);
+    void NeutronLoad(const std::string& energySpectrumFile,
+                     const std::string& angularDistributionFile);
     std::vector<double> energyBins;
     std::vector<double> energySpectrum;
     std::vector<double> energyValue;

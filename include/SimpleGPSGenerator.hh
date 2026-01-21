@@ -8,13 +8,14 @@
 class G4GeneralParticleSource;
 class G4Event;
 
-class SimpleGPSGenerator : public BambooGenerator {
+class SimpleGPSGenerator : public BambooGenerator
+{
   public:
-    SimpleGPSGenerator(const BambooParameters &pars);
+    SimpleGPSGenerator(const BambooParameters& pars);
 
     ~SimpleGPSGenerator() = default;
 
-    virtual void GeneratePrimaries(G4Event *anEvent);
+    virtual void GeneratePrimaries(G4Event* anEvent);
 
     static GeneratorRegister<SimpleGPSGenerator> reg;
 

@@ -2,23 +2,22 @@
 
 #include "BambooControl.hh"
 #include "BambooDetector.hh"
-
 #include <G4LogicalVolume.hh>
 
 struct PMTLVs
 {
-   G4LogicalVolume *CombineLV;
-   G4LogicalVolume *WindowLV;
-   G4LogicalVolume *PhotoCathodeLV;
-   G4LogicalVolume *CasingLV;
+    G4LogicalVolume* CombineLV;
+    G4LogicalVolume* WindowLV;
+    G4LogicalVolume* PhotoCathodeLV;
+    G4LogicalVolume* CasingLV;
 };
 
-class PMTsR8520 {
-
+class PMTsR8520
+{
   public:
-    PMTsR8520(const std::string &n, const BambooParameters &pars);
+    PMTsR8520(const std::string& n, const BambooParameters& pars);
 
-    PMTLVs construct(const BambooParameters &global_pars, BambooDetector *parent);
+    PMTLVs construct(const BambooParameters& global_pars, BambooDetector* parent);
 
   private:
     // define additional parameters here
@@ -34,17 +33,16 @@ class PMTsR8520 {
     G4double BaseThickness;
     G4double PMTToPMTBase;
 
-    G4LogicalVolume *CombineLogicalVolume;
-    G4LogicalVolume *WindowLogicalVolume;
-    G4LogicalVolume *CasingLogicalVolume;
-    G4LogicalVolume *InteriorLogicalVolume;
-    G4LogicalVolume *PhotoCathodeLogicalVolume;
-    G4LogicalVolume *BaseLogicalVolume;
+    G4LogicalVolume* CombineLogicalVolume;
+    G4LogicalVolume* WindowLogicalVolume;
+    G4LogicalVolume* CasingLogicalVolume;
+    G4LogicalVolume* InteriorLogicalVolume;
+    G4LogicalVolume* PhotoCathodeLogicalVolume;
+    G4LogicalVolume* BaseLogicalVolume;
 
-    G4VPhysicalVolume *WindowPhysicalVolume;
-    G4VPhysicalVolume *CasingPhysicalVolume;
-    G4VPhysicalVolume *InteriorPhysicalVolume;
-    G4VPhysicalVolume *PhotoCathodePhysicalVolume;
-    G4VPhysicalVolume *BasePhysicalVolume;
+    G4VPhysicalVolume* WindowPhysicalVolume;
+    G4VPhysicalVolume* CasingPhysicalVolume;
+    G4VPhysicalVolume* InteriorPhysicalVolume;
+    G4VPhysicalVolume* PhotoCathodePhysicalVolume;
+    G4VPhysicalVolume* BasePhysicalVolume;
 };
-

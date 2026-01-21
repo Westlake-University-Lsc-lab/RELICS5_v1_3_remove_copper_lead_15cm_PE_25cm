@@ -4,14 +4,15 @@
 
 class G4Track;
 
-class PandaXOpticalTrackingAction : public G4UserTrackingAction {
+class PandaXOpticalTrackingAction : public G4UserTrackingAction
+{
   public:
     PandaXOpticalTrackingAction() = default;
 
     ~PandaXOpticalTrackingAction() = default;
 
-    virtual void PreUserTrackingAction(const G4Track *aTrack);
-    virtual void PostUserTrackingAction(const G4Track *aTrack);
+    virtual void PreUserTrackingAction(const G4Track* aTrack);
+    virtual void PostUserTrackingAction(const G4Track* aTrack);
 
   private:
 };

@@ -4,14 +4,15 @@
 
 class G4Track;
 
-class RelicsOpticalTrackingAction : public G4UserTrackingAction {
+class RelicsOpticalTrackingAction : public G4UserTrackingAction
+{
   public:
     RelicsOpticalTrackingAction() = default;
 
     ~RelicsOpticalTrackingAction() = default;
 
-    virtual void PreUserTrackingAction(const G4Track *aTrack);
-    virtual void PostUserTrackingAction(const G4Track *aTrack);
+    virtual void PreUserTrackingAction(const G4Track* aTrack);
+    virtual void PostUserTrackingAction(const G4Track* aTrack);
 
   private:
 };

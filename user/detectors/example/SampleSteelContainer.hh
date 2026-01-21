@@ -4,16 +4,15 @@
 #include "BambooDetector.hh"
 #include "BambooFactory.hh"
 
-class SampleSteelContainer : public BambooDetector {
-
+class SampleSteelContainer : public BambooDetector
+{
   public:
-    SampleSteelContainer(const std::string &n, const BambooParameters &pars);
+    SampleSteelContainer(const std::string& n, const BambooParameters& pars);
 
-    virtual bool construct(const BambooParameters &global_pars, BambooDetector *parent);
+    virtual bool construct(const BambooParameters& global_pars, BambooDetector* parent);
 
     static DetectorRegister<SampleSteelContainer, std::string, BambooParameters> reg;
 
   private:
     // define additional parameters here
 };
-

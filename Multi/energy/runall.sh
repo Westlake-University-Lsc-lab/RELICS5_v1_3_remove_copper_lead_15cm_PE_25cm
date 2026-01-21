@@ -6,8 +6,7 @@ else
     echo "Using customized geometry setting $GEO"
 fi
 
-export RELICSSIM=$HOME/RelicsSim_v/RelicsSim_v5     # Need update
-export ANALYSIS=$HOME/RelicsSim_v/RelicsSim_v5/Multi/energy   # Need update
+export ANALYSIS=${RELICSSIM}/Multi/energy   # Need update
 # export PYTHONPATH="$RELICSSIM/scripts:$PYTHONPATH"
 
 parallel=50
@@ -31,7 +30,7 @@ norm='norm.json'
 jq -n ".N=$(expr $files \* $events)" > $norm
 
 # Muon induced neutron and gamma
-export FOLDER=$HOME/RelicsSim_v/RelicsSim_v5/results/muon   # Need update
+export FOLDER=${RELICSSIM}/results/muon   # Need update
 export SUFFIX="_muon"
 jq ".$SUFFIX=500" $norm | sponge $norm
 ./run.sh -m muon -f $(expr $files \* 10) -j $parallel -e $(expr $events \* 50) $clean $justprint

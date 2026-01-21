@@ -1,14 +1,14 @@
 #pragma once
 
-#include "BambooPhysics.hh"
 #include "BambooFactory.hh"
+#include "BambooPhysics.hh"
 
-class PandaXOpticalPhysics : public BambooPhysics {
+class PandaXOpticalPhysics : public BambooPhysics
+{
   public:
-    PandaXOpticalPhysics(const BambooParameters &pars);
+    PandaXOpticalPhysics(const BambooParameters& pars);
 
     ~PandaXOpticalPhysics() = default;
 
     static PhysicsRegister<PandaXOpticalPhysics> reg;
 };
-

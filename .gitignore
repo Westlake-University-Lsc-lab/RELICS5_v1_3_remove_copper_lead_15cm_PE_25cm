@@ -4,10 +4,16 @@
 *.o
 *.a
 *.so
+*.root
+*.h5
+*.log
 build/
-Makefile
+result/
 .*
 !.gitignore
+!.clang-format
+!.clang-tidy
+norm.json
 doc/
 include/version.hh
 __pycache__

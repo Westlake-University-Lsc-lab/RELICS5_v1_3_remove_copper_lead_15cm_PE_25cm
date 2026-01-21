@@ -9,17 +9,18 @@
 
 using std::string;
 
-class PandaXOpticalHit : public G4VHit {
+class PandaXOpticalHit : public G4VHit
+{
   public:
     PandaXOpticalHit() = default;
     ~PandaXOpticalHit() = default;
 
-    const PandaXOpticalHit &operator=(const PandaXOpticalHit &right);
-    G4int operator==(const PandaXOpticalHit &right) const;
+    const PandaXOpticalHit& operator=(const PandaXOpticalHit& right);
+    G4int operator==(const PandaXOpticalHit& right) const;
 
-    inline void *operator new(size_t);
+    inline void* operator new(size_t);
 
-    inline void operator delete(void *aHit);
+    inline void operator delete(void* aHit);
 
     void Draw() {}
     void Print() {}
@@ -30,11 +31,11 @@ class PandaXOpticalHit : public G4VHit {
     void setEnergy(double v) { energy = v; }
     double getEnergy() const { return energy; }
 
-    void setPosition(const G4ThreeVector &v) { pos = v; }
-    const G4ThreeVector &getPosition() const { return pos; }
+    void setPosition(const G4ThreeVector& v) { pos = v; }
+    const G4ThreeVector& getPosition() const { return pos; }
 
-    void setCreatorProcess(const string &s) { creatorProcess = s; }
-    const string &getCreatorProcess() const { return creatorProcess; }
+    void setCreatorProcess(const string& s) { creatorProcess = s; }
+    const string& getCreatorProcess() const { return creatorProcess; }
 
     void setGlobalTime(double v) { t_global = v; }
     double getGlobalTime() const { return t_global; }
@@ -48,11 +49,11 @@ class PandaXOpticalHit : public G4VHit {
     void setVelocity(double v) { velocity = v; }
     double getVelocity() const { return velocity; }
 
-    void setSourcePos(const G4ThreeVector &v) { source_pos = v; }
-    const G4ThreeVector &getSourcePos() const { return source_pos; }
+    void setSourcePos(const G4ThreeVector& v) { source_pos = v; }
+    const G4ThreeVector& getSourcePos() const { return source_pos; }
 
-    void setParent(const std::string &s) { parent = s; }
-    const std::string &getParent() { return parent; }
+    void setParent(const std::string& s) { parent = s; }
+    const std::string& getParent() { return parent; }
 
     void setParentId(int n) { parentId = n; }
     int getParentId() { return parentId; }
@@ -74,14 +75,15 @@ class PandaXOpticalHit : public G4VHit {
 
 using PandaXOpticalHitsCollection = G4THitsCollection<PandaXOpticalHit>;
 
-extern G4ThreadLocal G4Allocator<PandaXOpticalHit> *pandaXOpticalHitAllocator;
+extern G4ThreadLocal G4Allocator<PandaXOpticalHit>* pandaXOpticalHitAllocator;
 
-inline void *PandaXOpticalHit::operator new(size_t) {
-    if (!pandaXOpticalHitAllocator)
-        pandaXOpticalHitAllocator = new G4Allocator<PandaXOpticalHit>;
-    return (void *)pandaXOpticalHitAllocator->MallocSingle();
+inline void* PandaXOpticalHit::operator new(size_t)
+{
+  if (!pandaXOpticalHitAllocator) pandaXOpticalHitAllocator = new G4Allocator<PandaXOpticalHit>;
+  return (void*)pandaXOpticalHitAllocator->MallocSingle();
 }
 
-inline void PandaXOpticalHit::operator delete(void *aHit) {
-    pandaXOpticalHitAllocator->FreeSingle((PandaXOpticalHit *)aHit);
+inline void PandaXOpticalHit::operator delete(void* aHit)
+{
+  pandaXOpticalHitAllocator->FreeSingle((PandaXOpticalHit*)aHit);
 }

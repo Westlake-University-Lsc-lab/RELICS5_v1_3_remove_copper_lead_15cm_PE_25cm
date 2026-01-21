@@ -10,36 +10,37 @@ class EventLoaderMessenger;
 
 class G4Event;
 
-class EventLoader : public BambooGenerator {
+class EventLoader : public BambooGenerator
+{
   public:
-    EventLoader(const BambooParameters &pars);
+    EventLoader(const BambooParameters& pars);
 
     ~EventLoader() = default;
 
-    virtual void GeneratePrimaries(G4Event *anEvent);
+    virtual void GeneratePrimaries(G4Event* anEvent);
 
     static GeneratorRegister<EventLoader> reg;
 
-    void setConfineVolume(const G4String &s);
+    void setConfineVolume(const G4String& s);
 
-    void setShape(const G4String &s) { shape = s; }
+    void setShape(const G4String& s) { shape = s; }
 
-    void setCenter(const G4ThreeVector &v) { center = v; }
+    void setCenter(const G4ThreeVector& v) { center = v; }
 
     void setRadius(double v) { radius = v; }
 
     void setHeight(double v) { height = v; }
 
-    void setUpVec(const G4ThreeVector &v) { upVec = v; }
+    void setUpVec(const G4ThreeVector& v) { upVec = v; }
 
-    const G4String &getShape() { return shape; }
+    const G4String& getShape() { return shape; }
 
-    const G4String &getConfineVolume() { return confineVolume; }
+    const G4String& getConfineVolume() { return confineVolume; }
 
   private:
     G4ThreeVector generatePosition();
     G4ThreeVector sampleCylinderPosition();
-    G4bool isSourceConfined(const G4ThreeVector &pos);
+    G4bool isSourceConfined(const G4ThreeVector& pos);
     G4String shape;
 
     G4String confineVolume;

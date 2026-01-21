@@ -4,12 +4,12 @@
 #include "BambooDetector.hh"
 #include "BambooFactory.hh"
 
-class World : public BambooDetector {
-
+class World : public BambooDetector
+{
   public:
-    World(const std::string &n, const BambooParameters &pars);
+    World(const std::string& n, const BambooParameters& pars);
 
-    virtual bool construct(const BambooParameters &global_pars, BambooDetector *parent);
+    virtual bool construct(const BambooParameters& global_pars, BambooDetector* parent);
 
     static DetectorRegister<World, std::string, BambooParameters> reg;
 
@@ -19,6 +19,5 @@ class World : public BambooDetector {
     // define additional parameters here
 
   protected:
-    G4VPhysicalVolume *containerPV = nullptr;
+    G4VPhysicalVolume* containerPV = nullptr;
 };
-

@@ -1,11 +1,12 @@
 #pragma once
 
-#include "BambooFactory.hh"
 #include "BambooAnalysis.hh"
+#include "BambooFactory.hh"
 
-class RelicsOpticalAnalysis : public BambooAnalysis {
+class RelicsOpticalAnalysis : public BambooAnalysis
+{
   public:
-    RelicsOpticalAnalysis(const BambooParameters &pars);
+    RelicsOpticalAnalysis(const BambooParameters& pars);
 
     ~RelicsOpticalAnalysis() = default;
 

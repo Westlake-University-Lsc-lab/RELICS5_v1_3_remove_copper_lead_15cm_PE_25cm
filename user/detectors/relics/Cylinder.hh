@@ -5,12 +5,12 @@
 #include "BambooFactory.hh"
 #include "Monoblock.hh"
 
-class Cylinder : public Monoblock {
-
+class Cylinder : public Monoblock
+{
   public:
-    Cylinder(const std::string &n, const BambooParameters &pars);
+    Cylinder(const std::string& n, const BambooParameters& pars);
 
-    bool constructMainLV(const BambooParameters &global_pars);
+    bool constructMainLV(const BambooParameters& global_pars);
 
     static DetectorRegister<Cylinder, std::string, BambooParameters> reg;
 
@@ -19,4 +19,3 @@ class Cylinder : public Monoblock {
 
   protected:
 };
-

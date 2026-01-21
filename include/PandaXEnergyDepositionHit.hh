@@ -8,19 +8,19 @@
 
 using std::string;
 
-class PandaXEnergyDepositionHit : public G4VHit {
+class PandaXEnergyDepositionHit : public G4VHit
+{
   public:
     PandaXEnergyDepositionHit();
     ~PandaXEnergyDepositionHit() = default;
 
-    const PandaXEnergyDepositionHit &
-    operator=(const PandaXEnergyDepositionHit &right);
+    const PandaXEnergyDepositionHit& operator=(const PandaXEnergyDepositionHit& right);
 
-    int operator==(const PandaXEnergyDepositionHit &right) const;
+    int operator==(const PandaXEnergyDepositionHit& right) const;
 
-    inline void *operator new(size_t);
+    inline void* operator new(size_t);
 
-    inline void operator delete(void *aHit);
+    inline void operator delete(void* aHit);
 
     void Draw() {}
     void Print() {}
@@ -32,10 +32,10 @@ class PandaXEnergyDepositionHit : public G4VHit {
     double getY() const;
     double getZ() const;
     double getT() const;
-    const string &getType() const;
-    const string &getCreatorProcess() const;
-    const string &getDepositionProcess() const;
-    const string &getParent() const;
+    const string& getType() const;
+    const string& getCreatorProcess() const;
+    const string& getDepositionProcess() const;
+    const string& getParent() const;
 
     void setTrackId(int id);
     void setParentId(int id);
@@ -44,10 +44,10 @@ class PandaXEnergyDepositionHit : public G4VHit {
     void setY(double y);
     void setZ(double z);
     void setT(double t);
-    void setType(const string &type);
-    void setCreatorProcess(const string &process);
-    void setDepositionProcess(const string &process);
-    void setParent(const string &parent);
+    void setType(const string& type);
+    void setCreatorProcess(const string& process);
+    void setDepositionProcess(const string& process);
+    void setParent(const string& parent);
 
   private:
     int trackId_;
@@ -63,20 +63,18 @@ class PandaXEnergyDepositionHit : public G4VHit {
     string parent_;
 };
 
-using PandaXEnergyDepositionHitsCollection =
-    G4THitsCollection<PandaXEnergyDepositionHit>;
+using PandaXEnergyDepositionHitsCollection = G4THitsCollection<PandaXEnergyDepositionHit>;
 
-extern G4Allocator<PandaXEnergyDepositionHit>
-    *pandaXEnergyDepositionHitAllocator;
+extern G4Allocator<PandaXEnergyDepositionHit>* pandaXEnergyDepositionHitAllocator;
 
-inline void *PandaXEnergyDepositionHit::operator new(size_t) {
-    if (!pandaXEnergyDepositionHitAllocator)
-        pandaXEnergyDepositionHitAllocator =
-            new G4Allocator<PandaXEnergyDepositionHit>;
-    return (void *)pandaXEnergyDepositionHitAllocator->MallocSingle();
+inline void* PandaXEnergyDepositionHit::operator new(size_t)
+{
+  if (!pandaXEnergyDepositionHitAllocator)
+    pandaXEnergyDepositionHitAllocator = new G4Allocator<PandaXEnergyDepositionHit>;
+  return (void*)pandaXEnergyDepositionHitAllocator->MallocSingle();
 }
 
-inline void PandaXEnergyDepositionHit::operator delete(void *aHit) {
-    pandaXEnergyDepositionHitAllocator->FreeSingle(
-        (PandaXEnergyDepositionHit *)aHit);
+inline void PandaXEnergyDepositionHit::operator delete(void* aHit)
+{
+  pandaXEnergyDepositionHitAllocator->FreeSingle((PandaXEnergyDepositionHit*)aHit);
 }

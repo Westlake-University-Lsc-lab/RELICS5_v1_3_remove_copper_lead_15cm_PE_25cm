@@ -1,18 +1,20 @@
 #pragma once
 
-#include <string>
-
 #include <G4LogicalVolume.hh>
 #include <G4VPhysicalVolume.hh>
 
-class BambooDetector {
+#include <string>
+
+class BambooDetector
+{
   public:
-    BambooDetector(const std::string &n, const BambooParameters &pars)
-        : name{n}, parameters{pars} {};
+    BambooDetector(const std::string& n, const BambooParameters& pars)
+      : name{n}, parameters{pars} {};
 
     virtual ~BambooDetector() = default;
 
-    virtual bool construct(const BambooParameters &global_pars, BambooDetector *parent = nullptr) = 0;
+    virtual bool construct(const BambooParameters& global_pars,
+                           BambooDetector* parent = nullptr) = 0;
 
     auto getMainLV() { return mainLV; }
     auto getMainPV() { return mainPV; }
@@ -21,7 +23,7 @@ class BambooDetector {
   protected:
     std::string name;
     BambooParameters parameters;
-    G4LogicalVolume *mainLV = nullptr;
-    G4LogicalVolume *containerLV = nullptr;
-    G4VPhysicalVolume *mainPV = nullptr;
+    G4LogicalVolume* mainLV = nullptr;
+    G4LogicalVolume* containerLV = nullptr;
+    G4VPhysicalVolume* mainPV = nullptr;
 };

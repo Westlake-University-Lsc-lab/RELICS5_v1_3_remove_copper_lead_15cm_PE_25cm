@@ -6,19 +6,20 @@
 #include <G4VProcess.hh>
 #include <G4Version.hh>
 
-PandaXSteppingAction::~PandaXSteppingAction() {}
+PandaXSteppingAction::~PandaXSteppingAction() = default;
 
-void PandaXSteppingAction::UserSteppingAction(const G4Step *aStep) {
-    G4Track *aTrack = aStep->GetTrack();
-    auto *def = aTrack->GetParticleDefinition();
-    if (def->GetParticleType() != "nucleus" || aTrack->GetTrackID() == 1) {
-        return;
-    }
-    if (aTrack->GetTrackStatus() != fStopButAlive)
-        return;
-    if (def->GetIonLifeTime() > chainSplittingLifeTime) {
-        aTrack->SetTrackStatus(fPostponeToNextEvent);
-        aTrack->SetGlobalTime(0.0 * second);
-    }
+void PandaXSteppingAction::UserSteppingAction(const G4Step* aStep)
+{
+  G4Track* aTrack = aStep->GetTrack();
+  auto* def = aTrack->GetParticleDefinition();
+  if (def->GetParticleType() != "nucleus" || aTrack->GetTrackID() == 1)
+  {
+    return;
+  }
+  if (aTrack->GetTrackStatus() != fStopButAlive) return;
+  if (def->GetIonLifeTime() > chainSplittingLifeTime)
+  {
+    aTrack->SetTrackStatus(fPostponeToNextEvent);
+    aTrack->SetGlobalTime(0.0 * second);
+  }
 }
-

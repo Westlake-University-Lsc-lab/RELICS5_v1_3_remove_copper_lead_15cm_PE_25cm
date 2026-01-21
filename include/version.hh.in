@@ -1,3 +1,2 @@
 #pragma once
 #define BAMBOOMC_VERSION "@REVISION@"
-

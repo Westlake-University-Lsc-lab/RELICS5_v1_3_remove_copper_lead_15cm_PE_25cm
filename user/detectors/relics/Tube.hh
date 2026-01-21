@@ -5,12 +5,12 @@
 #include "BambooFactory.hh"
 #include "Monoblock.hh"
 
-class Tube : public Monoblock {
-
+class Tube : public Monoblock
+{
   public:
-    Tube(const std::string &n, const BambooParameters &pars);
+    Tube(const std::string& n, const BambooParameters& pars);
 
-    bool constructMainLV(const BambooParameters &global_pars);
+    bool constructMainLV(const BambooParameters& global_pars);
 
     static DetectorRegister<Tube, std::string, BambooParameters> reg;
 

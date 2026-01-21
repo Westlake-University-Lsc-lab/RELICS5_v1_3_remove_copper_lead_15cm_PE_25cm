@@ -6,13 +6,14 @@
 
 class G4Step;
 
-class PandaXOpticalSteppingAction : public G4UserSteppingAction {
+class PandaXOpticalSteppingAction : public G4UserSteppingAction
+{
   public:
-    PandaXOpticalSteppingAction(const std::string &s) : sdName{s} {}
+    PandaXOpticalSteppingAction(const std::string& s) : sdName{s} {}
 
     ~PandaXOpticalSteppingAction() = default;
 
-    virtual void UserSteppingAction(const G4Step *aStep);
+    virtual void UserSteppingAction(const G4Step* aStep);
 
   private:
     std::string sdName;

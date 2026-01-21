@@ -2,23 +2,42 @@ import argparse
 
 from template import TemplateGenerate
 
-parser = argparse.ArgumentParser(description='Generate normalization factor after simulation')
+parser = argparse.ArgumentParser(
+    description="Generate normalization factor after simulation"
+)
 
-parser.add_argument('--InputFolder', dest='InputFolder',
-                    action='store', required=True,
-                    help='Input folder stores the simulated files')
+parser.add_argument(
+    "--InputFolder",
+    dest="InputFolder",
+    action="store",
+    required=True,
+    help="Input folder stores the simulated files",
+)
 
-parser.add_argument('--InputNorm', dest='InputNorm',
-                    action='store', required=True,
-                    help='Normalization factor .json file')
+parser.add_argument(
+    "--InputNorm",
+    dest="InputNorm",
+    action="store",
+    required=True,
+    help="Normalization factor .json file",
+)
 
-parser.add_argument('--OutputFile', dest='OutputFile',
-                    action='store', required=True,
-                    help='Output .npz file name')
+parser.add_argument(
+    "--OutputFile",
+    dest="OutputFile",
+    action="store",
+    required=True,
+    help="Output .npz file name",
+)
 
-parser.add_argument('--Veto', dest='Veto',
-                    action='store', default=1e-2,
-                    type=float, help='Muon Veto factor')
+parser.add_argument(
+    "--Veto",
+    dest="Veto",
+    action="store",
+    default=1e-2,
+    type=float,
+    help="Muon Veto factor",
+)
 
 args = parser.parse_args()
 

@@ -5,12 +5,12 @@
 #include "BambooFactory.hh"
 #include "Monoblock.hh"
 
-class Polyhedra : public Monoblock {
-
+class Polyhedra : public Monoblock
+{
   public:
-    Polyhedra(const std::string &n, const BambooParameters &pars);
+    Polyhedra(const std::string& n, const BambooParameters& pars);
 
-    bool constructMainLV(const BambooParameters &global_pars);
+    bool constructMainLV(const BambooParameters& global_pars);
 
     static DetectorRegister<Polyhedra, std::string, BambooParameters> reg;
 
@@ -19,4 +19,3 @@ class Polyhedra : public Monoblock {
 
   protected:
 };
-

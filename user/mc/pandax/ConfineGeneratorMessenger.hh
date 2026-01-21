@@ -8,21 +8,21 @@
 #include <G4UImessenger.hh>
 
 #include <memory>
-
 #include <set>
 #include <vector>
 
 class ConfineGenerator;
 
-class ConfineGeneratorMessenger : public G4UImessenger {
+class ConfineGeneratorMessenger : public G4UImessenger
+{
   public:
-    ConfineGeneratorMessenger(ConfineGenerator *gen);
+    ConfineGeneratorMessenger(ConfineGenerator* gen);
     virtual ~ConfineGeneratorMessenger() = default;
 
-    virtual void SetNewValue(G4UIcommand *command, G4String newValues);
+    virtual void SetNewValue(G4UIcommand* command, G4String newValues);
 
   private:
-    ConfineGenerator *myGen;
+    ConfineGenerator* myGen;
     std::unique_ptr<G4UIdirectory> cgsDir;
     std::unique_ptr<G4UIcmdWithAString> shapeCmd;
     std::unique_ptr<G4UIcmdWithAString> confineCmd;

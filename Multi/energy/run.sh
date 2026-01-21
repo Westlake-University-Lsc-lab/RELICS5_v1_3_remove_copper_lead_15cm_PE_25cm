@@ -11,7 +11,7 @@ parallel=50
 clean=''
 justprint=''
 
-while getopts m:i:t:r:s:f:e:j:c:n flag
+while getopts m:i:t:r:s:f:e:j:cn flag
 do
     case "${flag}" in
         m) mode=${OPTARG};;
@@ -50,4 +50,4 @@ if [[ -z "${FOLDER}" ]]; then
     exit 1
 fi
 
-make -j $parallel $clean $justprint
+make -C ${ANALYSIS} -j $parallel $clean $justprint

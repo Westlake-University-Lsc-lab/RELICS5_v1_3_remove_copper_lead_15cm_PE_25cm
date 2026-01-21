@@ -1,35 +1,35 @@
 #pragma once
 
+#include <TFile.h>
+
 #include <string>
 #include <vector>
-
-#include <TFile.h>
 
 class TTree;
 
 class G4Event;
 
-class PandaXOpticalDataManager {
-
+class PandaXOpticalDataManager
+{
     friend class PandaXOpticalRunAction;
     friend class PandaXOpticalEventAction;
     // friend class PandaXAnalysis;
 
   private:
     PandaXOpticalDataManager() = default;
-    PandaXOpticalDataManager(const PandaXOpticalDataManager &) = delete;
-    PandaXOpticalDataManager &
-    operator=(const PandaXOpticalDataManager &) = delete;
+    PandaXOpticalDataManager(const PandaXOpticalDataManager&) = delete;
+    PandaXOpticalDataManager& operator=(const PandaXOpticalDataManager&) = delete;
 
   public:
-    static PandaXOpticalDataManager &getInstance() {
-        static PandaXOpticalDataManager instance;
-        return instance;
+    static PandaXOpticalDataManager& getInstance()
+    {
+      static PandaXOpticalDataManager instance;
+      return instance;
     }
 
     ~PandaXOpticalDataManager();
 
-    void book(const std::string &name = "pandaxout.root");
+    void book(const std::string& name = "pandaxout.root");
 
     void save();
 
@@ -37,13 +37,13 @@ class PandaXOpticalDataManager {
 
     void setRecordEnergyDeposition(bool t) { recordEnergyDeposition = t; }
 
-    void fillEvent(const G4Event *aEvent);
+    void fillEvent(const G4Event* aEvent);
 
   private:
     void resetData();
 
-    TFile *rootFile = nullptr;
-    TTree *mcTree = nullptr;
+    TFile* rootFile = nullptr;
+    TTree* mcTree = nullptr;
 
     int runId;
     int eventId;

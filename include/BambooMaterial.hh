@@ -2,14 +2,14 @@
 
 #include "BambooControl.hh"
 
-class BambooMaterial {
+class BambooMaterial
+{
   public:
     BambooMaterial() = default;
 
     virtual ~BambooMaterial() = default;
 
-    virtual void defineMaterials(const BambooParameters &pars) = 0;
+    virtual void defineMaterials(const BambooParameters& pars) = 0;
 
   protected:
-
 };

@@ -2,7 +2,6 @@
 
 #include "BambooFactory.hh"
 #include "BambooGenerator.hh"
-
 #include <G4ParticleGun.hh>
 
 #include <memory>
@@ -10,18 +9,20 @@
 class G4ParticleGun;
 class G4Event;
 
-class GammaGenerator : public BambooGenerator {
+class GammaGenerator : public BambooGenerator
+{
   public:
-    GammaGenerator(const BambooParameters &pars);
+    GammaGenerator(const BambooParameters& pars);
 
     ~GammaGenerator() = default;
 
-    virtual void GeneratePrimaries(G4Event *anEvent);
+    virtual void GeneratePrimaries(G4Event* anEvent);
 
     static GeneratorRegister<GammaGenerator> reg;
 
   private:
-    void GammaLoad(const std::string& energySpectrumFile, const std::string& angularDistributionFile);
+    void GammaLoad(const std::string& energySpectrumFile,
+                   const std::string& angularDistributionFile);
     std::vector<double> energyBins;
     std::vector<double> energySpectrum;
     std::vector<double> energyValue;
