@@ -1,6 +1,7 @@
 import argparse
 import copy
 import json
+import logging
 import shutil
 
 import numpy as np
@@ -55,18 +56,18 @@ normalization = dict()
 # 缪子和CRN率计算
 shielding_x = params["muon_x"] / 100  # 转换为米
 m_rate = muon_rate() * shielding_x**2 * 2 * np.pi
-print(f"Total muon rate: {m_rate:.2f}Hz")
-print(f"Muon rate per m²: {m_rate / (shielding_x**2):.2f}Hz/m²")
+logging.info(f"Total muon rate: {m_rate:.2f}Hz")
+logging.info(f"Muon rate per m²: {m_rate / (shielding_x**2):.2f}Hz/m²")
 
 shielding_x = params["CRN_x"] / 100  # 转换为米
 CRN_rate = 248.59 / 25 * shielding_x * shielding_x
-print(f"Total CRN rate: {CRN_rate:.2f}Hz")
-print(f"CRN rate per m²: {CRN_rate / (shielding_x**2):.2f}Hz/m²")
+logging.info(f"Total CRN rate: {CRN_rate:.2f}Hz")
+logging.info(f"CRN rate per m²: {CRN_rate / (shielding_x**2):.2f}Hz/m²")
 
 # 从几何配置中提取探测器组件
 detectors = copy.deepcopy(geo.get("geometry", {}).get("detectors", []))  # 增加容错处理
 for i, det in enumerate(detectors):
-    print(f"{i:2d} {det['name']}")
+    logging.info(f"{i:2d} {det['name']}")
 
 # 从mass.log加载质量数据
 masses = []
@@ -208,7 +209,7 @@ normalization["lXe"] = {
 
 # 打印组件质量验证
 for component in ["copper", "steel", "Teflon", "PMTwindow", "PMTbase", "lXe"]:
-    print(f"{component} mass: {normalization[component]['mass']:.4f} kg")
+    logging.info(f"{component} mass: {normalization[component]['mass']:.4f} kg")
 
 # 归一化因子计算（保持原逻辑）
 eventALL = norm["N"]

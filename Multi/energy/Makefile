@@ -49,7 +49,7 @@ $(folder)/cevns_%.xml : $(folder)/params_%.json
 	 num_dec=$$((10#$$num_raw)); \
 	 run_num=$$(( num_dec )); \
 	 echo "文件标识：$* -> 原始序号：$$num_raw -> 十进制：$$num_dec -> 最终run_number: $$run_num"; \
-	 python3 $(relicssim)/scripts/relics_xml.py $< -o $@ --run_number $$run_num --gen $(mode)
+	 python3 $(relicssim)/scripts/relics_xml.py $< -o $@ --run_number $$run_num --gen $(mode) --enable_track --disable_energy_depo
 
 # 提取带前导零的原始序号（如0000008）
 # 强制转为十进制（0000008 → 8）

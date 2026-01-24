@@ -38,14 +38,14 @@ PandaXAnalysis::PandaXAnalysis(const BambooParameters& pars) : BambooAnalysis(pa
   trackingAction = new PandaXTrackingAction();
   if (enable_decay_chain_splitting)
   {
-    double chainSplittingLifeTime = 300 * CLHEP::microsecond;
+    double chainSplittingLifeTime = 0.;
     const auto& pmap = analysisParameters.getParameters();
     if (pmap.find("ChainSplittingLifeTime") != pmap.end())
     {
       chainSplittingLifeTime =
         BambooUtils::evaluate(analysisParameters.getParameter("ChainSplittingLifeTime"));
     }
-    if (chainSplittingLifeTime == 0)
+    if (chainSplittingLifeTime == 0.)
     {
       chainSplittingLifeTime = 300 * CLHEP::microsecond;
     }

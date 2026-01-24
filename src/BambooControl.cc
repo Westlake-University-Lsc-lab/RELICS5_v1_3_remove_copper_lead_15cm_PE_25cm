@@ -3,7 +3,7 @@
 #include "BambooDetectorConstruction.hh"
 #include "BambooFactory.hh"
 #include "BambooUtils.hh"
-#include "external/json.hh"
+#include "external/json.hpp"
 #include <G4PhysListFactory.hh>
 #include <G4VUserPhysicsList.hh>
 #include <unistd.h>

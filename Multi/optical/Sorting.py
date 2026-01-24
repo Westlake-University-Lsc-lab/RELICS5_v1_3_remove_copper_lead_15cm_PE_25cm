@@ -3,11 +3,11 @@
 ################################################################
 
 import argparse
+import logging
 
 import h5py
 import numpy as np
 from ROOT import TFile  # pyright: ignore[reportAttributeAccessIssue]
-from tqdm import tqdm
 
 parser = argparse.ArgumentParser(
     description="Cluster energy deposition based on position"
@@ -61,8 +61,8 @@ tree = Infile.Get("mcTree")
 
 eventN = int(tree.GetEntries())
 
-print(f"Loading: {InputFile}")
-print(f"Total event number = {eventN}")
+logging.info(f"Loading: {InputFile}")
+logging.info(f"Total event number = {eventN}")
 
 
 def set_nan_defaults(result):
@@ -101,7 +101,7 @@ for ii in range(eventN):
 primary = np.zeros(sum(nPrimaries), dtype=primary_dtype)
 set_nan_defaults(primary)
 
-for ii in tqdm(range(eventN)):
+for ii in range(eventN):
     tree.GetEntry(ii)
     primary[ii]["runId"] = int(tree.runId)
     primary[ii]["eventId"] = int(tree.eventId)
@@ -123,4 +123,4 @@ assert np.all(primary["hits_per_channel"].sum(axis=1) == primary["nHits"])
 with h5py.File(OutputFile, "w") as opt:
     opt.create_dataset("primaries", data=primary, compression="gzip")
 
-print(f"Saving: {OutputFile}")
+logging.info(f"Saving: {OutputFile}")

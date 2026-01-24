@@ -1,9 +1,9 @@
 import argparse
+import logging
 
 import h5py
 import numpy as np
 from dtypes import event_dtype, primary_dtype
-from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description="Combine h5 files together")
 
@@ -45,10 +45,10 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-InputFiles = args.InputFiles
-OutputFile = args.OutputFile
-N = args.N
-BASE_RUN = args.BASE_RUN  # 读取BASE_RUN参数
+InputFiles: str = args.InputFiles
+OutputFile: str = args.OutputFile
+N: int = args.N
+BASE_RUN: int = args.BASE_RUN  # 读取BASE_RUN参数
 
 events = []
 primaries = []
@@ -56,7 +56,7 @@ primaries = []
 
 # 核心修改：循环范围从 BASE_RUN+1 到 BASE_RUN+N（匹配Makefile的序号生成逻辑）
 # range是左闭右开，因此结束值为 BASE_RUN + N + 1
-for n in tqdm(range(BASE_RUN + 1, BASE_RUN + N + 1)):
+for n in range(BASE_RUN + 1, BASE_RUN + N + 1):
     file = InputFiles % n
     with h5py.File(file, "r", libver="latest", swmr=True) as ipt:
         events.append(np.array(ipt["events"]))
@@ -72,5 +72,5 @@ with h5py.File(OutputFile, "w") as opt:
     opt.create_dataset("primaries", data=primaries, compression="gzip")
     # opt.create_dataset('clusters', data=primaries, compression='gzip')  # 原代码笔误：应改为clusters
 
-print(f"{OutputFile} saved")
-print(f"{len(events)} events in the file")
+logging.info(f"{OutputFile} saved")
+logging.info(f"{len(events)} events in the file")

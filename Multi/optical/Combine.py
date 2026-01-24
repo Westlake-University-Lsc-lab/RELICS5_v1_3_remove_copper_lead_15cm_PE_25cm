@@ -1,4 +1,5 @@
 import argparse
+import logging
 
 import h5py
 import numpy as np
@@ -50,4 +51,4 @@ primaries = np.hstack(primaries)
 with h5py.File(OutputFile, "w") as opt:
     opt.create_dataset("primaries", data=primaries, compression="gzip")
 
-print(f"{OutputFile} saved")
+logging.info(f"{OutputFile} saved")

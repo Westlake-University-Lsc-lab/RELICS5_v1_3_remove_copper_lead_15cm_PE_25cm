@@ -7,7 +7,7 @@
 #include <G4Track.hh>
 #include <G4Version.hh>
 
-PandaXStackingAction::~PandaXStackingAction() {}
+PandaXStackingAction::~PandaXStackingAction() = default;
 
 void addTrack(const G4Track* aTrack)
 {

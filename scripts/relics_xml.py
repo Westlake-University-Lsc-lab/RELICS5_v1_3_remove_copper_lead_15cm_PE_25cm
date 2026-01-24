@@ -58,20 +58,31 @@ parser.add_argument(
 parser.add_argument(
     "--optical", action="store_true", help="Whether do optical simulation"
 )
+parser.add_argument(
+    "--disable_energy_depo", action="store_true", help="Disable energy deposition"
+)
+parser.add_argument(
+    "--disable_primary_particle",
+    action="store_true",
+    help="Disable primary particle recording",
+)
 
 args = parser.parse_args()
 
-number = args.run_number
-fipt = args.ipt
-fopt = args.opt
-gen = args.generator
-cutlength = args.cutlength
-enable_track = args.enable_track
-force_sd = args.force_sd
-check_overlap = args.check_overlap
-get_geo_mass = args.get_geo_mass
-save_txt = args.save_txt
-optical = args.optical
+number: str = args.run_number
+fipt: str = args.ipt
+fopt: str = args.opt
+gen: str = args.generator
+cutlength: float = args.cutlength
+
+enable_track: bool = args.enable_track
+force_sd: bool = args.force_sd
+check_overlap: bool = args.check_overlap
+get_geo_mass: bool = args.get_geo_mass
+save_txt: bool = args.save_txt
+optical: bool = args.optical
+disable_energy_depo: bool = args.disable_energy_depo
+disable_primary_particle: bool = args.disable_primary_particle
 
 with open(fipt) as f:
     params = json.load(f)
@@ -1041,19 +1052,19 @@ if optical:
         ("EnablePrimaryParticle", "1"),
         ("SaveNullEvents", "1"),
         ("OpticalSdName", "bR8520"),
-        ("UserSeed", f"{seed}"),
-        ("GetGeoMass", "1" if get_geo_mass else "0"),
+        ("UserSeed", str(seed)),
+        ("GetGeoMass", str(int(get_geo_mass))),
     ]
 else:
     analysis_params = [
-        ("EnableEnergyDeposition", "1"),
-        ("EnableSurfaceFlux", "1" if enable_track else "0"),
-        ("EnablePrimaryParticle", "1"),
+        ("EnableEnergyDeposition", str(int(not disable_energy_depo))),
+        ("EnableSurfaceFlux", str(int(enable_track))),
+        ("EnablePrimaryParticle", str(int(not disable_primary_particle))),
         ("SaveNullEvents", "0"),
         ("EnableDecayChainSplitting", "1"),
         ("ChainSplittingLifeTime", "400*us"),
-        ("UserSeed", f"{seed}"),
-        ("GetGeoMass", "1" if get_geo_mass else "0"),
+        ("UserSeed", str(seed)),
+        ("GetGeoMass", str(int(get_geo_mass))),
     ]
 
 for name, value in analysis_params:

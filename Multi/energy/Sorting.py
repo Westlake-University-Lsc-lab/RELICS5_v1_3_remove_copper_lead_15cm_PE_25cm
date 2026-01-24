@@ -4,6 +4,7 @@
 ################################################################
 
 import argparse
+import logging
 
 import h5py
 import numpy as np
@@ -16,7 +17,6 @@ from dtypes import (
 )
 from ROOT import TFile  # pyright: ignore[reportAttributeAccessIssue]
 from sklearn.cluster import DBSCAN
-from tqdm import tqdm
 
 parser = argparse.ArgumentParser(
     description="Cluster energy deposition based on position"
@@ -49,10 +49,10 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-InputFile = args.InputFile
-OutputFile = args.OutputFile
-ClusteringEps = args.ClusteringEps
-print(f"Using {ClusteringEps}mm clustering parameter")
+InputFile: str = args.InputFile
+OutputFile: str = args.OutputFile
+ClusteringEps: float = args.ClusteringEps
+logging.info(f"Using {ClusteringEps}mm clustering parameter")
 
 # Load input ROOT file
 
@@ -61,8 +61,8 @@ tree = Infile.Get("mcTree")
 
 eventN = int(tree.GetEntries())
 
-print(f"Loading: {InputFile}")
-print(f"Total event number = {eventN}")
+logging.info(f"Loading: {InputFile}")
+logging.info(f"Total event number = {eventN}")
 
 
 def is_nr(group):
@@ -126,8 +126,8 @@ def clustering(tree, ClusteringEps):
     df["volume"] = [str(s) for s in list(tree.volume)]
 
     df = df[df["energy"] > 0]
-    df = np.sort(df, kind="stable", order="energy")[::-1]
-    df = np.sort(df, kind="stable", order="t")
+    df = np.flip(np.sort(df, kind="stable", order="energy"))
+    df.sort(kind="stable", order="t")
 
     nr = is_nr(df)
     df["x"][nr] += nr_x_offset  # Separately cluttering ER & NR
@@ -136,7 +136,7 @@ def clustering(tree, ClusteringEps):
     detE = df["energy"][df["volume"] == "lxenon"].sum() / 1e6
     if detE > 1.0:
         highEflag = 0
-        print(
+        logging.info(
             f"Deposited {detE:.2f}GeV energy in LXe detector, will not perform micro clustering"
         )
 
@@ -156,7 +156,7 @@ def clustering(tree, ClusteringEps):
             )
             label = db.fit_predict(Y)
         except Exception:
-            print("Have to use ball tree, probably due to memory limit")
+            logging.warning("Have to use ball tree, probably due to memory limit")
             db = DBSCAN(eps=ClusteringEps, min_samples=1, algorithm="ball_tree")
             label = db.fit_predict(X)
     else:
@@ -168,7 +168,7 @@ def clustering(tree, ClusteringEps):
     df["label"] = label
     df["x"][nr] -= nr_x_offset
 
-    df = np.sort(df, order="label")
+    df.sort(order="label")
     labels, index = np.unique(df["label"], return_index=True)
     index = np.append(index, len(df))
 
@@ -203,7 +203,7 @@ estart = 0
 eend = 0
 pstart = 0
 pend = 0
-for ii in tqdm(range(eventN)):
+for ii in range(eventN):
     tree.GetEntry(ii)
 
     dt = clustering(tree, ClusteringEps)
@@ -272,5 +272,5 @@ with h5py.File(OutputFile, "w") as opt:
     opt.create_dataset("events", data=event, compression="gzip")
     opt.create_dataset("clusters", data=cluster, compression="gzip")
 
-print(f"Saving: {OutputFile}")
-print(f"Total cluster number = {event['nClusters'].sum()}")
+logging.info(f"Saving: {OutputFile}")
+logging.info(f"Total cluster number = {event['nClusters'].sum()}")

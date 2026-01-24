@@ -90,11 +90,10 @@ void PandaXOpticalDataManager::fillEvent(const G4Event* aEvent)
       G4VHitsCollection* hitsCollection = hCthis->GetHC(i);
       if (hitsCollection->GetName().contains("EnergyDepositionHits"))
       {
-        PandaXEnergyDepositionHitsCollection* hC =
-          (PandaXEnergyDepositionHitsCollection*)hitsCollection;
+        auto hC = (PandaXEnergyDepositionHitsCollection*)hitsCollection;
         for (size_t j = 0; j < hitsCollection->GetSize(); ++j)
         {
-          PandaXEnergyDepositionHit* hit = (PandaXEnergyDepositionHit*)hC->GetHit(j);
+          auto hit = (PandaXEnergyDepositionHit*)hC->GetHit(j);
           trackId.push_back(hit->getTrackId());
           parentId.push_back(hit->getParentId());
           type.push_back(hit->getType());

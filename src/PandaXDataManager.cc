@@ -106,12 +106,11 @@ void PandaXDataManager::fillEvent(const G4Event* aEvent, bool partial)
       G4VHitsCollection* hitsCollection = hCthis->GetHC(i);
       if (hitsCollection->GetName().contains("EnergyDepositionHits"))
       {
-        PandaXEnergyDepositionHitsCollection* hC =
-          (PandaXEnergyDepositionHitsCollection*)hitsCollection;
+        auto hC = (PandaXEnergyDepositionHitsCollection*)hitsCollection;
         nHits += hitsCollection->GetSize();
         for (size_t j = 0; j < hitsCollection->GetSize(); ++j)
         {
-          PandaXEnergyDepositionHit* hit = (PandaXEnergyDepositionHit*)hC->GetHit(j);
+          auto hit = (PandaXEnergyDepositionHit*)hC->GetHit(j);
           trackId.push_back(hit->getTrackId());
           parentId.push_back(hit->getParentId());
           type.push_back(hit->getType());
@@ -136,11 +135,11 @@ void PandaXDataManager::fillEvent(const G4Event* aEvent, bool partial)
       G4VHitsCollection* hitsCollection = hCthis->GetHC(i);
       if (hitsCollection->GetName().contains("SurfaceFluxHits"))
       {
-        PandaXSurfaceFluxHitsCollection* hC = (PandaXSurfaceFluxHitsCollection*)hitsCollection;
+        auto hC = (PandaXSurfaceFluxHitsCollection*)hitsCollection;
         nTracks += hitsCollection->GetSize();
         for (size_t j = 0; j < hitsCollection->GetSize(); ++j)
         {
-          PandaXSurfaceFluxHit* hit = (PandaXSurfaceFluxHit*)hC->GetHit(j);
+          auto hit = (PandaXSurfaceFluxHit*)hC->GetHit(j);
           G4ThreeVector momentum = hit->getMomentum();
           trackEnergy.push_back(hit->getEnergy() / keV);
           trackName.push_back(hit->getTrackName());
@@ -287,8 +286,7 @@ void PandaXDataManager::resetPartialEvent(const G4Event* aEvent)
     G4VHitsCollection* hitsCollection = hCthis->GetHC(i);
     if (hitsCollection->GetName().contains("EnergyDepositionHits"))
     {
-      PandaXEnergyDepositionHitsCollection* hC =
-        (PandaXEnergyDepositionHitsCollection*)hitsCollection;
+      auto hC = (PandaXEnergyDepositionHitsCollection*)hitsCollection;
       for (size_t j = 0; j < hC->entries(); ++j)
       {
         PandaXEnergyDepositionHit* hit = (*hC)[j];
@@ -298,7 +296,7 @@ void PandaXDataManager::resetPartialEvent(const G4Event* aEvent)
     }
     else if (hitsCollection->GetName().contains("SurfaceFluxHits"))
     {
-      PandaXSurfaceFluxHitsCollection* hC = (PandaXSurfaceFluxHitsCollection*)hitsCollection;
+      auto hC = (PandaXSurfaceFluxHitsCollection*)hitsCollection;
       for (size_t j = 0; j < hC->entries(); ++j)
       {
         PandaXSurfaceFluxHit* hit = (*hC)[j];

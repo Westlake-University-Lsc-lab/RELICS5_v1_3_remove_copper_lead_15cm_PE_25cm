@@ -13,7 +13,7 @@
 #  include <yaml-cpp/yaml.h>
 #endif
 
-#include "external/json.hh"
+#include "external/json.hpp"
 
 class QXmlStreamReader;
 
