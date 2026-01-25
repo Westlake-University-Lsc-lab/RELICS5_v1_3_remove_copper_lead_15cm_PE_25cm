@@ -5,6 +5,7 @@ import h5py
 import numpy as np
 from tqdm import tqdm
 
+logging.basicConfig(level=logging.INFO)
 parser = argparse.ArgumentParser(description="Combine h5 files together")
 
 parser.add_argument(

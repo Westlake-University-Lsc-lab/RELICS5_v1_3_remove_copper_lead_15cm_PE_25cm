@@ -9,6 +9,7 @@ import h5py
 import numpy as np
 from ROOT import TFile  # pyright: ignore[reportAttributeAccessIssue]
 
+logging.basicConfig(level=logging.INFO)
 parser = argparse.ArgumentParser(
     description="Cluster energy deposition based on position"
 )

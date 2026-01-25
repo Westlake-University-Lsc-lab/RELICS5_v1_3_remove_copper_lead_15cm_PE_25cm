@@ -17,7 +17,7 @@ events=10000
 clean=''
 justprint=''
 
-while getopts f:e:j:c:n flag
+while getopts f:e:j:cn flag
 do
     case "${flag}" in
         j) parallel=${OPTARG};;

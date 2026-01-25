@@ -18,6 +18,7 @@ from dtypes import (
 from ROOT import TFile  # pyright: ignore[reportAttributeAccessIssue]
 from sklearn.cluster import DBSCAN
 
+logging.basicConfig(level=logging.INFO)
 parser = argparse.ArgumentParser(
     description="Cluster energy deposition based on position"
 )

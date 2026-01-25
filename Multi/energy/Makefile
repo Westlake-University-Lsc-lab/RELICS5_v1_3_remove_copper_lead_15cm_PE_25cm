@@ -29,12 +29,13 @@ first_seq := $(shell printf "%07d" $(first_seq_dec))
 last_seq := $(shell printf "%07d" $(last_seq_dec))
 # 4. 拼接最终文件名：events_后缀_起始序号_结束序号.h5
 collection:=$(folder)/events$(suffix)_$(first_seq)_$(last_seq).h5
+flux_collection:=$(folder)/flux$(suffix)_$(first_seq)_$(last_seq).h5
 
 .PHONY : all
 
-all : $(collection)
+all : $(collection) $(flux_collection)
 
-$(folder)/params_%.json :
+$(json) :
 	@mkdir -p $(dir $@); \
 	[ -z "$(geo)" ] && cp $(relicssim)/config/geo_params.json $@ || cp $(geo) $@
 
@@ -72,6 +73,10 @@ $(folder)/events_%.h5 : $(folder)/$(mode)_%.root
 $(collection) : $(patsubst $(folder)/params_%.json,$(folder)/events_%.h5,$(json))
 	@mkdir -p $(dir $@)
 	OMP_NUM_THREADS=2 python3 $(analysis)/Combine.py --InputFiles $(folder)/events_%$(format)$(suffix).h5 --OutputFile $(abspath $@) -N $(fileN) --BASE_RUN $(BASE_RUN) > $(abspath $@).log 2>&1
+
+$(flux_collection) : $(patsubst $(folder)/params_%.json,$(folder)/$(mode)_%.root,$(json))
+	@mkdir -p $(dir $@)
+	OMP_NUM_THREADS=2 python3 $(analysis)/combine_flux.py --InputFiles $(folder)/$(mode)_%$(format)$(suffix).root --OutputFile $(abspath $@) -N $(fileN) --BASE_RUN $(BASE_RUN) > $(abspath $@).log 2>&1
 
 # 改动3：-f强制覆盖+绝对路径，适配新序号体系，保留原有注释
 $(combine) : $(patsubst $(folder)/params_%.json,$(folder)/$(mode)_%.root,$(json))

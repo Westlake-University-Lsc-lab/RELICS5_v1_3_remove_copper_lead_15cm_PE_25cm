@@ -23,9 +23,9 @@ event_dtype = np.dtype(
     [
         ("runId", np.uint32),
         ("eventId", np.uint32),
-        ("nHits", np.uint32),
+        ("nHits", np.uint64),
         ("nClusters", np.uint32),
-        ("nPrimaries", np.uint32),
+        ("nPrimaries", np.uint64),
     ]
     + get_event_dtype()
 )
@@ -34,7 +34,7 @@ primary_dtype = np.dtype(
     [
         ("runId", np.uint32),
         ("eventId", np.uint32),
-        ("nPrimaries", np.uint32),
+        ("nPrimaries", np.uint64),
         ("primaryEnergy", np.float64),
         ("primaryPx", np.float64),
         ("primaryPy", np.float64),
@@ -96,3 +96,19 @@ def set_nan_defaults(result):
             result[field][:] = np.nan
         elif np.issubdtype(result.dtype[field], object):
             result[field][:] = "unknown"
+
+
+flux_dtype = np.dtype(
+    [
+        ("trackEnergy", np.float64),
+        ("trackName", h5py.string_dtype()),
+        ("trackParent", h5py.string_dtype()),
+        ("px", np.float64),
+        ("py", np.float64),
+        ("pz", np.float64),
+        ("trackTime", np.float64),
+        ("trackX", np.float64),
+        ("trackY", np.float64),
+        ("trackZ", np.float64),
+    ]
+)

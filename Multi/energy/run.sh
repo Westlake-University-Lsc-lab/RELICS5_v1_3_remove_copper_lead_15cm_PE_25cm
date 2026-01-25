@@ -8,10 +8,11 @@ topside='TOP'
 files=100
 events=100000
 parallel=50
+target=''
 clean=''
 justprint=''
 
-while getopts m:i:t:r:s:f:e:j:cn flag
+while getopts m:i:t:r:s:f:e:j:g:cn flag
 do
     case "${flag}" in
         m) mode=${OPTARG};;
@@ -22,7 +23,8 @@ do
         f) files=${OPTARG};;
         e) events=${OPTARG};;
         j) parallel=${OPTARG};;
-        c) clean='clean';;
+        g) target=${OPTARG};;
+        c) clean='clean';; # only used if target is not set
         n) justprint='-n';;
     esac
 done
@@ -50,4 +52,8 @@ if [[ -z "${FOLDER}" ]]; then
     exit 1
 fi
 
-make -C ${ANALYSIS} -j $parallel $clean $justprint
+if [[ ${clean} == 'clean' ]] && [[ ${target} == '' ]]; then
+    target='clean'
+fi
+
+make -C ${ANALYSIS} -j $parallel $target $justprint

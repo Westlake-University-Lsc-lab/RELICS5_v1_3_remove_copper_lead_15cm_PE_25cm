@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 from muonRate import muon_rate
 
+logging.basicConfig(level=logging.INFO)
 parser = argparse.ArgumentParser(
     description="Generate normalization factor after simulation"
 )
