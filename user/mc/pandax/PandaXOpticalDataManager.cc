@@ -5,6 +5,7 @@
 #include <G4Event.hh>
 #include <G4ParticleDefinition.hh>
 #include <G4PhysicalConstants.hh>
+#include <G4String.hh>
 #include <G4SystemOfUnits.hh>
 #include <G4THitsMap.hh>
 #include <TTree.h>
@@ -88,7 +89,7 @@ void PandaXOpticalDataManager::fillEvent(const G4Event* aEvent)
     for (int i = 0; i < nHitCollections; ++i)
     {
       G4VHitsCollection* hitsCollection = hCthis->GetHC(i);
-      if (hitsCollection->GetName().contains("EnergyDepositionHits"))
+      if (G4StrUtil::contains(hitsCollection->GetName(), "EnergyDepositionHits"))
       {
         auto hC = (PandaXEnergyDepositionHitsCollection*)hitsCollection;
         for (size_t j = 0; j < hitsCollection->GetSize(); ++j)
@@ -114,7 +115,7 @@ void PandaXOpticalDataManager::fillEvent(const G4Event* aEvent)
   for (int i = 0; i < nHitCollections; ++i)
   {
     auto hC = hCthis->GetHC(i);
-    if (hC->GetName().contains("OpticalHits"))
+    if (G4StrUtil::contains(hC->GetName(), "OpticalHits"))
     {
       auto hCo = static_cast<PandaXOpticalHitsCollection*>(hC);
       for (auto j = 0u; j < hC->GetSize(); ++j)

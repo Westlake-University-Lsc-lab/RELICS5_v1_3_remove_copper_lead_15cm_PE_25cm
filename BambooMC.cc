@@ -5,6 +5,7 @@
 #include <G4RunManager.hh>
 #include <G4UIExecutive.hh>
 #include <G4UImanager.hh>
+#include <G4Version.hh>
 #include <G4VisExecutive.hh>
 
 #include <iostream>
@@ -12,7 +13,7 @@
 #include <sstream>
 #include <string>
 
-void usage(const char* exeName);
+// void usage(const char* exeName);
 
 int main(int argc, char* argv[])
 {
@@ -26,7 +27,7 @@ int main(int argc, char* argv[])
   control.print();
 
   std::unique_ptr<G4UIExecutive> ui{nullptr};
-  if (control.isInterative())
+  if (control.isInteractive())
   {
     ui = std::make_unique<G4UIExecutive>(argc, argv);
   }
@@ -35,10 +36,10 @@ int main(int argc, char* argv[])
 
   runManager->SetRunIDCounter(control.getRunNumber());
 
-  // // initialize the detector
+  // initialize the detector
   runManager->SetUserInitialization(control.createDetector());
 
-  // // initialize the physics
+  // initialize the physics
   auto physicsList = control.createPhysics();
   if (physicsList == nullptr)
   {
@@ -128,8 +129,9 @@ int main(int argc, char* argv[])
 
   return 0;
 }
-
+/*
 void usage(const char* exeName)
 {
   std::cout << "Usage: " << exeName << " [macro]" << std::endl;
 }
+*/

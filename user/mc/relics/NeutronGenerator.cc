@@ -171,8 +171,8 @@ void NeutronGenerator::GeneratePrimaries(G4Event* anEvent)
   // Convert cosTheta to direction components
   double sinTheta = std::sqrt(1.0 - cosTheta * cosTheta);
   double phi = G4UniformRand() * M_PI * 2;
-  directionX = sinTheta * std::cos(phi);
-  directionY = sinTheta * std::sin(phi);
+  directionX = -sinTheta * std::cos(phi);
+  directionY = -sinTheta * std::sin(phi);
   directionZ = -cosTheta;
 
   G4double posX, posY, posZ;

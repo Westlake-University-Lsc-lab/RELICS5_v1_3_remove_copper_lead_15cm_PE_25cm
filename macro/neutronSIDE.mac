@@ -1,17 +1,18 @@
 /gps/particle neutron
 
-/gps/pos/type Plane
-/gps/pos/shape Rectangle
-/gps/pos/rot1 0 0 -1
-/gps/pos/centre 62.5 0 0 cm
-/gps/pos/halfx 125 cm
-/gps/pos/halfy 125 cm
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/rot1 1 0 0
+/gps/pos/rot2 0 1 0
+/gps/pos/centre 25 0 0 m
+/gps/pos/radius 1.52 m
+/gps/pos/halfz 2.1335 m
 
 /gps/ang/type iso
-/gps/ang/rot1 0 -1 0
-/gps/ang/rot2 1 0 0
-/gps/ang/minphi 0 deg
-/gps/ang/maxphi 180 deg
+/gps/pos/rot1 0 1 0
+/gps/pos/rot2 0 0 1
+/gps/ang/mintheta 0 rad
+/gps/ang/maxtheta 0.2003348423 rad
 
 /gps/ene/type Arb
 /gps/ene/diffspec 1

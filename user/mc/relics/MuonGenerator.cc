@@ -73,8 +73,9 @@ G4double MuonGenerator::energySpectrum(G4double energy)
 
 G4double MuonGenerator::getRandomTheta()
 {
-  G4double theta, rvs = 1., upper = 0.;
+  G4double rvs = 1., upper = 0.;
   G4double thetaSpectrum_max = thetaSpectrum(theta_max);
+  G4double theta;
   while (rvs > upper)
   {
     theta = G4UniformRand() * M_PI_2;
@@ -86,8 +87,9 @@ G4double MuonGenerator::getRandomTheta()
 
 G4double MuonGenerator::getRandomEnergy()
 {
-  G4double energy, rvs = 1., upper = 0.;
+  G4double rvs = 1., upper = 0.;
   G4double energySpectrum_max = energySpectrum(E_low);
+  G4double energy;
   while (rvs > upper)
   {
     energy = G4UniformRand() * (E_up - E_low) + E_low;
@@ -105,8 +107,8 @@ G4double MuonGenerator::getRandomPhi()
 
 G4ParticleDefinition* MuonGenerator::getMuonCharge()
 {
-  G4ParticleDefinition* particle;
   auto particleTable = G4ParticleTable::GetParticleTable();
+  G4ParticleDefinition* particle;
   if (G4UniformRand() < charge_thres)
   {
     particle = particleTable->FindParticle("mu-");
@@ -128,8 +130,8 @@ void MuonGenerator::GeneratePrimaries(G4Event* anEvent)
   G4double phi = getRandomPhi();
   G4double energy = getRandomEnergy();
 
-  dirX = sin(theta) * cos(phi);
-  dirY = sin(theta) * sin(phi);
+  dirX = -sin(theta) * cos(phi);
+  dirY = -sin(theta) * sin(phi);
   dirZ = -cos(theta);
   posX = (G4UniformRand() - 0.5) * shielding_x;
   posY = (G4UniformRand() - 0.5) * shielding_x;

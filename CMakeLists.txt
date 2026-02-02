@@ -1,15 +1,9 @@
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
-project(BambooMC VERSION 2.0)
+cmake_minimum_required(VERSION 3.16)
+project(BambooMC VERSION 2.0 LANGUAGES CXX)
 
 # check for cxx compiler flag
-include(CheckCXXCompilerFlag)
-check_cxx_compiler_flag("-std=c++14" COMPILER_SUPPORTS_CXX14)
-
-if(COMPILER_SUPPORTS_CXX14)
-  set(CMAKE_CXX_STANDARD 14)
-else()
-  message(FATAL_ERROR "You need a compiler with at least standard c++11 support")
-endif()
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -19,30 +13,16 @@ include(${Geant4_USE_FILE})
 include_directories(${Geant4_INCLUDE_DIRS})
 
 # root
-find_package(ROOT)
+find_package(ROOT REQUIRED)
 
-# find Qt
-set(ForceQt4 OFF CACHE BOOL "Force Qt4")
+# SQLite3
+find_package(SQLite3 REQUIRED)
 
-if (ForceQt4)
-  find_package(Qt4 REQUIRED COMPONENTS QtCore)
-  include_directories(${QT_QTCORE_INCLUDE_DIR})
-  set(QTLIB Qt4::QtCore)
-else()
-  find_package(Qt5Core QUIET)
-  set(QTLIB "")
-  if(Qt5Core_FOUND)
-    message("Found Qt5Core version ${Qt5Core_VERSION}")
-    include_directories(${Qt5Core_INCLUDE_DIRS})
-    set(QTLIB Qt5::Core)
-  else()
-    unset(Qt5Core_DIR CACHE)
-    message("fallback to Qt4 through Qt5 is specified")
-    find_package(Qt4 REQUIRED COMPONENTS QtCore)
-    include_directories(${QT_QTCORE_INCLUDE_DIR})
-    set(QTLIB Qt4::QtCore)
-  endif()
-endif()
+# Qt6
+find_package(Qt6 REQUIRED COMPONENTS Core)
+message("Found Qt6Core version ${Qt6Core_VERSION}")
+include_directories(${Qt6Core_INCLUDE_DIRS})
+set(QTLIB Qt6::Core)
 
 # find yaml-cpp
 find_package(yaml-cpp 0.6 NO_MODULE)
@@ -98,8 +78,8 @@ if(ENABLE_USER_MC)
     include_directories(${PROJECT_SOURCE_DIR}/user/mc/${USER_MC})
   endforeach(USER_MC)
   add_library(UserMC ${UserMC})
-  target_include_directories(UserMC PRIVATE ${ROOT_INCLUDE_DIRS})
-  target_link_libraries(UserMC ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
+  target_include_directories(UserMC PRIVATE ${ROOT_INCLUDE_DIRS} ${SQLite3_INCLUDE_DIRS})
+  target_link_libraries(UserMC ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${SQLite3_LIBRARIES})
 endif(ENABLE_USER_MC)
 
 add_library(BambooCore src/BambooControl.cc src/BambooUtils.cc src/BambooDetectorConstruction.cc)

@@ -13,6 +13,7 @@ suffix:=$(SUFFIX)
 mode:=$(PMODE)
 relicssim:=$(RELICSSIM)
 analysis:=$(ANALYSIS)
+SAMPLING_MODE ?= False
 
 format:=07g
 # 核心修改：序号起始=BASE_RUN+1，结束=BASE_RUN+fileN（如BASE_RUN=10000、fileN=1 → 10001→10001 → 0010001）
@@ -29,17 +30,21 @@ first_seq := $(shell printf "%07d" $(first_seq_dec))
 last_seq := $(shell printf "%07d" $(last_seq_dec))
 # 4. 拼接最终文件名：events_后缀_起始序号_结束序号.h5
 collection:=$(folder)/events$(suffix)_$(first_seq)_$(last_seq).h5
-flux_collection:=$(folder)/flux$(suffix)_$(first_seq)_$(last_seq).h5
+flux_collection:=$(folder)/flux$(suffix)_$(first_seq)_$(last_seq).parquet
 
 .PHONY : all
 
-all : $(collection) $(flux_collection)
+all : collection
+
+collection : $(collection)
+
+flux_collection : $(flux_collection)
 
 $(json) :
 	@mkdir -p $(dir $@); \
 	[ -z "$(geo)" ] && cp $(relicssim)/config/geo_params.json $@ || cp $(geo) $@
 
-# 暂时取消采用py生成xml
+
 $(folder)/cevns_%.xml : $(folder)/params_%.json
 	@mkdir -p $(dir $@)
 #	 python3 $(relicssim)/scripts/relics_xml.py $< -o $@ --run_number $(shell echo $* | cut -d'_' -f 1) --gen $(mode)
@@ -50,7 +55,7 @@ $(folder)/cevns_%.xml : $(folder)/params_%.json
 	 num_dec=$$((10#$$num_raw)); \
 	 run_num=$$(( num_dec )); \
 	 echo "文件标识：$* -> 原始序号：$$num_raw -> 十进制：$$num_dec -> 最终run_number: $$run_num"; \
-	 python3 $(relicssim)/scripts/relics_xml.py $< -o $@ --run_number $$run_num --gen $(mode) --enable_track --disable_energy_depo
+	 python3 $(relicssim)/scripts/relics_xml.py $< -o $@ --run_number $$run_num --gen $(mode) --sampling-mode $(SAMPLING_MODE)
 
 # 提取带前导零的原始序号（如0000008）
 # 强制转为十进制（0000008 → 8）
@@ -70,13 +75,17 @@ $(folder)/events_%.h5 : $(folder)/$(mode)_%.root
 	@mkdir -p $(dir $@)
 	OMP_NUM_THREADS=2 python3 $(analysis)/Sorting.py --InputFile $(abspath $<) --OutputFile $(abspath $@) > $(abspath $@).log 2>&1
 
+$(folder)/flux_%.parquet : $(folder)/$(mode)_%.root
+	@mkdir -p $(dir $@)
+	python3 $(analysis)/sorting_flux.py --InputFile $(abspath $<) --OutputFile $(abspath $@) > $(abspath $@).log 2>&1
+
 $(collection) : $(patsubst $(folder)/params_%.json,$(folder)/events_%.h5,$(json))
 	@mkdir -p $(dir $@)
 	OMP_NUM_THREADS=2 python3 $(analysis)/Combine.py --InputFiles $(folder)/events_%$(format)$(suffix).h5 --OutputFile $(abspath $@) -N $(fileN) --BASE_RUN $(BASE_RUN) > $(abspath $@).log 2>&1
 
-$(flux_collection) : $(patsubst $(folder)/params_%.json,$(folder)/$(mode)_%.root,$(json))
+$(flux_collection) : $(patsubst $(folder)/params_%.json,$(folder)/flux_%.parquet,$(json))
 	@mkdir -p $(dir $@)
-	OMP_NUM_THREADS=2 python3 $(analysis)/combine_flux.py --InputFiles $(folder)/$(mode)_%$(format)$(suffix).root --OutputFile $(abspath $@) -N $(fileN) --BASE_RUN $(BASE_RUN) > $(abspath $@).log 2>&1
+	python3 $(analysis)/combine_flux.py --InputFiles $(folder)/flux_%$(format)$(suffix).parquet --OutputFile $(abspath $@) -N $(fileN) --BASE_RUN $(BASE_RUN) > $(abspath $@).log 2>&1
 
 # 改动3：-f强制覆盖+绝对路径，适配新序号体系，保留原有注释
 $(combine) : $(patsubst $(folder)/params_%.json,$(folder)/$(mode)_%.root,$(json))

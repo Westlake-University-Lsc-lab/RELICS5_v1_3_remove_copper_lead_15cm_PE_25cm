@@ -71,7 +71,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   Vacuum->AddElement(N, 0.755);
   Vacuum->AddElement(O, 0.245);
 
-  G4MaterialPropertiesTable* pVacuumPropertiesTable = new G4MaterialPropertiesTable();
+  auto pVacuumPropertiesTable = new G4MaterialPropertiesTable();
   G4double pVacuumPhotonMomentum[] = {6.91 * eV, 6.98 * eV, 7.05 * eV};
   G4double pVacuumRefractiveIndex[] = {1.0, 1.0, 1.0};
   pVacuumPropertiesTable->AddProperty("RINDEX", pVacuumPhotonMomentum, pVacuumRefractiveIndex, 3);
@@ -85,7 +85,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   Air->AddElement(O, 0.231781);
   Air->AddElement(Ar, 0.012827);
 
-  G4MaterialPropertiesTable* pAirPropertiesTable = new G4MaterialPropertiesTable();
+  auto pAirPropertiesTable = new G4MaterialPropertiesTable();
   G4double pAirPhotonMomentum[] = {6.91 * eV, 6.98 * eV, 7.05 * eV};
   G4double pAirRefractiveIndex[] = {1.0, 1.0, 1.0};
   pAirPropertiesTable->AddProperty("RINDEX", pAirPhotonMomentum, pAirRefractiveIndex, 3);
@@ -101,7 +101,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   G4double pLXeScintillation[] = {0.1, 1.0, 0.1};
   G4double pLXeAbsorbtionLength[] = {1000. * cm, 1000. * cm, 1000. * cm};
   G4double pLXeScatteringLength[] = {30. * cm, 30. * cm, 30. * cm};
-  G4MaterialPropertiesTable* pLXePropertiesTable = new G4MaterialPropertiesTable();
+  auto pLXePropertiesTable = new G4MaterialPropertiesTable();
   pLXePropertiesTable->AddProperty("RINDEX", pLXePhotonMomentum, pLXeRefractiveIndex, 3);
   pLXePropertiesTable->AddProperty("ABSLENGTH", pLXePhotonMomentum, pLXeAbsorbtionLength, 3);
   pLXePropertiesTable->AddProperty("RAYLEIGH", pLXePhotonMomentum, pLXeScatteringLength, 3);
@@ -138,7 +138,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   G4double pGXeScintillation[] = {0.1, 1.0, 0.1};
   G4double pGXeAbsorbtionLength[] = {100 * m, 100 * m, 100 * m};
   G4double pGXeScatteringLength[] = {100 * m, 100 * m, 100 * m};
-  G4MaterialPropertiesTable* pGXePropertiesTable = new G4MaterialPropertiesTable();
+  auto pGXePropertiesTable = new G4MaterialPropertiesTable();
   pGXePropertiesTable->AddProperty("RINDEX", pGXePhotonMomentum, pGXeRefractiveIndex, 3);
   pGXePropertiesTable->AddProperty("ABSLENGTH", pGXePhotonMomentum, pGXeAbsorbtionLength, 3);
   pGXePropertiesTable->AddProperty("RAYLEIGH", pGXePhotonMomentum, pGXeScatteringLength, 3);
@@ -166,14 +166,14 @@ void Material::defineMaterials(const BambooParameters& parameters)
 
   // ==== Quartz ====
   // ref: http://www.sciner.com/Opticsland/FS.htm
-  G4Material* Quartz = new G4Material("Quartz", 2.201 * g / cm3, 2, kStateSolid);
+  auto Quartz = new G4Material("Quartz", 2.201 * g / cm3, 2, kStateSolid);
   Quartz->AddElement(Si, 1);
   Quartz->AddElement(O, 2);
 
   G4double pQuartzPhotonMomentum[] = {1. * eV, 6.9 * eV, 6.91 * eV, 6.98 * eV, 7.05 * eV};
   G4double pQuartzRefractiveIndex[] = {1.50, 1.50, 1.50, 1.56, 1.60};
   G4double pQuartzAbsorbtionLength[] = {30 * m, 30 * m, 30 * m, 30 * m, 30 * m};
-  G4MaterialPropertiesTable* pQuartzPropertiesTable = new G4MaterialPropertiesTable();
+  auto pQuartzPropertiesTable = new G4MaterialPropertiesTable();
   pQuartzPropertiesTable->AddProperty("RINDEX", pQuartzPhotonMomentum, pQuartzRefractiveIndex, 5);
   pQuartzPropertiesTable->AddProperty("ABSLENGTH", pQuartzPhotonMomentum, pQuartzAbsorbtionLength,
                                       5);
@@ -182,7 +182,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   materials.push_back(Quartz);
 
   // ==== PhotoCathodeAluminium ====
-  G4Material* PhotoCathodeAluminium =
+  auto PhotoCathodeAluminium =
     new G4Material("PhotoCathodeAluminium", 8.00 * g / cm3, 1, kStateSolid);
   PhotoCathodeAluminium->AddElement(Al, 1);
 
@@ -192,7 +192,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   G4double pPhotoCathodeReflectivity[] = {0., 0., 0., 0., 0.};
   G4double pPhotoCathodeTransmittance[] = {1e-12, 1e-12, 1e-12, 1e-12, 1e-12};
   G4double pPhotoCathodeEsfficiency[] = {1., 1., 1., 1., 1.};
-  G4MaterialPropertiesTable* pPhotoCathodePropertiesTable = new G4MaterialPropertiesTable();
+  auto pPhotoCathodePropertiesTable = new G4MaterialPropertiesTable();
   pPhotoCathodePropertiesTable->AddProperty("RINDEX", pPhotoCathodePhotonMomentum,
                                             pPhotoCathodeRefractiveIndex, 5);
   pPhotoCathodePropertiesTable->AddProperty("ABSLENGTH", pPhotoCathodePhotonMomentum,
@@ -208,13 +208,13 @@ void Material::defineMaterials(const BambooParameters& parameters)
   materials.push_back(PhotoCathodeAluminium);
 
   // ==== Copper ====
-  G4Material* Copper = new G4Material("Copper", 8.92 * g / cm3, 1, kStateSolid);
+  auto Copper = new G4Material("Copper", 8.92 * g / cm3, 1, kStateSolid);
   Copper->AddElement(Cu, 1);
 
   G4double pCopperPhotonMomentum[] = {1.91 * eV, 6.98 * eV, 7.05 * eV};
   G4double pCopperReflectivity[] = {0.15, 0.2, 0.15};
   G4double pCopperTransmittance[] = {1e-12, 1e-12, 1e-12};
-  G4MaterialPropertiesTable* pCopperPropertiesTable = new G4MaterialPropertiesTable();
+  auto pCopperPropertiesTable = new G4MaterialPropertiesTable();
   pCopperPropertiesTable->AddProperty("REFLECTIVITY", pCopperPhotonMomentum, pCopperReflectivity,
                                       3);
   pCopperPropertiesTable->AddProperty("TRANSMITTANCE", pCopperPhotonMomentum, pCopperTransmittance,
@@ -224,7 +224,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   materials.push_back(Copper);
 
   // ==== SS304LSteel ====
-  G4Material* SS304LSteel = new G4Material("SS304LSteel", 8.00 * g / cm3, 5, kStateSolid);
+  auto SS304LSteel = new G4Material("SS304LSteel", 8.00 * g / cm3, 5, kStateSolid);
   SS304LSteel->AddElement(Fe, 0.65);
   SS304LSteel->AddElement(Cr, 0.20);
   SS304LSteel->AddElement(Ni, 0.12);
@@ -235,7 +235,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   G4double pSS304LSteelRefractiveIndex[] = {0.5, 0.5};
   G4double pSS304LSteelTransmittance[] = {1e-12, 1e-12};
 
-  G4MaterialPropertiesTable* pSSPropertiesTable = new G4MaterialPropertiesTable();
+  auto pSSPropertiesTable = new G4MaterialPropertiesTable();
   pSSPropertiesTable->AddProperty("REFLECTIVITY", pSS304LSteelPhotonMomentum,
                                   pSS304LSteelRefractiveIndex, 2);
   pSSPropertiesTable->AddProperty("TRANSMITTANCE", pSS304LSteelPhotonMomentum,
@@ -245,7 +245,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   materials.push_back(SS304LSteel);
 
   // ==== Flange ====
-  G4Material* Flange = new G4Material("Flange", 8.00 * g / cm3, 5, kStateSolid);
+  auto Flange = new G4Material("Flange", 8.00 * g / cm3, 5, kStateSolid);
   Flange->AddElement(Fe, 0.65);
   Flange->AddElement(Cr, 0.20);
   Flange->AddElement(Ni, 0.12);
@@ -256,7 +256,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   G4double pFlangeRefractiveIndex[] = {0.5, 0.5};
   G4double pFlangeTransmittance[] = {1e-12, 1e-12};
 
-  G4MaterialPropertiesTable* pFlangePropertiesTable = new G4MaterialPropertiesTable();
+  auto pFlangePropertiesTable = new G4MaterialPropertiesTable();
   pFlangePropertiesTable->AddProperty("REFLECTIVITY", pFlangePhotonMomentum, pFlangeRefractiveIndex,
                                       2);
   pFlangePropertiesTable->AddProperty("TRANSMITTANCE", pFlangePhotonMomentum, pFlangeTransmittance,
@@ -266,7 +266,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   materials.push_back(Flange);
 
   // ==== Teflon ====
-  G4Material* Teflon = new G4Material("Teflon", 2.2 * g / cm3, 2, kStateSolid);
+  auto Teflon = new G4Material("Teflon", 2.2 * g / cm3, 2, kStateSolid);
   Teflon->AddElement(C, 0.240183);
   Teflon->AddElement(F, 0.759817);
 
@@ -278,7 +278,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   G4double pTeflonSpecularSpike[] = {0.01, 0.01, 0.01};
   G4double pTeflonBackscatter[] = {0.01, 0.01, 0.01};
   G4double pTeflonTransmittance[] = {1e-12, 1e-12, 1e-12};
-  G4MaterialPropertiesTable* pTeflonPropertiesTable = new G4MaterialPropertiesTable();
+  auto pTeflonPropertiesTable = new G4MaterialPropertiesTable();
   pTeflonPropertiesTable->AddProperty("RINDEX", pTeflonPhotonMomentum, pTeflonRefractiveIndex, 3);
   pTeflonPropertiesTable->AddProperty("ABSLENGTH", pTeflonPhotonMomentum, pTeflonAbsorbtionLength,
                                       3);
@@ -297,7 +297,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   materials.push_back(Teflon);
 
   // ==== TeflonGas ====
-  G4Material* TeflonGas = new G4Material("TeflonGas", 2.2 * g / cm3, 2, kStateSolid);
+  auto TeflonGas = new G4Material("TeflonGas", 2.2 * g / cm3, 2, kStateSolid);
   TeflonGas->AddElement(C, 0.240183);
   TeflonGas->AddElement(F, 0.759817);
 
@@ -309,7 +309,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   G4double pTeflonGasSpecularSpike[] = {0.01, 0.01, 0.01};
   G4double pTeflonGasBackscatter[] = {0.01, 0.01, 0.01};
   G4double pTeflonGasTransmittance[] = {1e-12, 1e-12, 1e-12};
-  G4MaterialPropertiesTable* pTeflonGasPropertiesTable = new G4MaterialPropertiesTable();
+  auto pTeflonGasPropertiesTable = new G4MaterialPropertiesTable();
   pTeflonGasPropertiesTable->AddProperty("RINDEX", pTeflonGasPhotonMomentum,
                                          pTeflonGasRefractiveIndex, 3);
   pTeflonGasPropertiesTable->AddProperty("ABSLENGTH", pTeflonGasPhotonMomentum,
@@ -329,7 +329,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   materials.push_back(TeflonGas);
 
   // ==== Cirlex ====
-  G4Material* Cirlex = new G4Material("Cirlex", 1.43 * g / cm3, 4, kStateSolid);
+  auto Cirlex = new G4Material("Cirlex", 1.43 * g / cm3, 4, kStateSolid);
   Cirlex->AddElement(C, 22);
   Cirlex->AddElement(H, 10);
   Cirlex->AddElement(N, 2);
@@ -338,7 +338,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   G4double pCirlexPhotonMomentum[] = {6.91 * eV, 6.98 * eV, 7.05 * eV};
   G4double pCirlexReflectivity[] = {0.5, 0.5, 0.5};
   G4double pCirlexTransmittance[] = {1e-12, 1e-12, 1e-12};
-  G4MaterialPropertiesTable* pCirlexPropertiesTable = new G4MaterialPropertiesTable();
+  auto pCirlexPropertiesTable = new G4MaterialPropertiesTable();
   pCirlexPropertiesTable->AddProperty("REFLECTIVITY", pCirlexPhotonMomentum, pCirlexReflectivity,
                                       3);
   pCirlexPropertiesTable->AddProperty("TRANSMITTANCE", pCirlexPhotonMomentum, pCirlexTransmittance,
@@ -350,7 +350,7 @@ void Material::defineMaterials(const BambooParameters& parameters)
   // ==== Polyethylene ====
   // https://www.sciencedirect.com/science/article/pii/S0969806X18311289
   // Fig3. 10% Boron -> 1.03g/cm^3
-  G4Material* Polyethylene = new G4Material("Polyethylene", 1.03 * g / cm3, 3, kStateSolid);
+  auto Polyethylene = new G4Material("Polyethylene", 1.03 * g / cm3, 3, kStateSolid);
   Polyethylene->AddElement(C, 0.779);
   Polyethylene->AddElement(H, 0.121);
   Polyethylene->AddElement(B, 0.1);
@@ -411,7 +411,7 @@ void Material::SetProperties(const BambooParameters& parameters, const std::stri
                              G4MaterialPropertiesTable* table)
 {
   bool changed_flag = false;
-  for (std::string property : vector_properties)
+  for (const std::string& property : vector_properties)
   {
     auto pstring = parameters.getParameter(material + property);
     if (pstring != "")
@@ -422,7 +422,7 @@ void Material::SetProperties(const BambooParameters& parameters, const std::stri
     }
   }
 
-  for (std::string property : const_properties)
+  for (const std::string& property : const_properties)
   {
     auto pstring = parameters.getParameter(material + property);
     if (pstring != "")
@@ -448,7 +448,7 @@ void Material::SetProperties(const BambooParameters& parameters, const std::stri
 void Material::SetVectorProperty(G4MaterialPropertiesTable* table, const std::string& property,
                                  G4String newValue)
 {
-  G4MaterialPropertyVector* mpv = new G4MaterialPropertyVector();
+  auto mpv = new G4MaterialPropertyVector();
   std::istringstream instring(newValue);
   while (instring)
   {
@@ -508,12 +508,12 @@ G4OpticalSurface* Material::EvalOpParameters(const BambooParameters& parameters,
   auto medium = G4Material::GetMaterial(material);
   auto old_table = medium->GetMaterialPropertiesTable();
   // need to copy-construct a new table!
-  G4MaterialPropertiesTable* new_table = new G4MaterialPropertiesTable(*old_table);
+  auto new_table = new G4MaterialPropertiesTable(*old_table);
   // update properties of surface
   SetProperties(parameters, prefix, new_table);
 
-  G4OpticalSurface* opSurface = new G4OpticalSurface(material + "_Surface", Models.at(model),
-                                                     Finishes.at(finish), Types.at(type), alpha);
+  auto opSurface = new G4OpticalSurface(material + "_Surface", Models.at(model),
+                                        Finishes.at(finish), Types.at(type), alpha);
   opSurface->SetMaterialPropertiesTable(new_table);
   return opSurface;
 }

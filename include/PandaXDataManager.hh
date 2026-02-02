@@ -97,6 +97,7 @@ class PandaXDataManager
 
     TFile* rootFile = nullptr;
     TTree* mcTree = nullptr;
+    TTree* mcTree_flux = nullptr;
 
     int runId;
     int eventId;

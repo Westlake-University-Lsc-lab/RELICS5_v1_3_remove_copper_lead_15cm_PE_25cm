@@ -6,6 +6,7 @@
 #include <G4ParticleDefinition.hh>
 #include <G4PhysicalConstants.hh>
 #include <G4SDManager.hh>
+#include <G4String.hh>
 #include <G4SystemOfUnits.hh>
 #include <G4THitsMap.hh>
 #include <TTree.h>
@@ -50,17 +51,18 @@ void PandaXDataManager::book(const std::string& name)
   }
   if (recordSurfaceFlux)
   {
-    mcTree->Branch("nTracks", &nTracks);
-    mcTree->Branch("trackEnergy", &trackEnergy);
-    mcTree->Branch("trackName", &trackName);
-    mcTree->Branch("trackParent", &trackParent);
-    mcTree->Branch("px", &px);
-    mcTree->Branch("py", &py);
-    mcTree->Branch("pz", &pz);
-    mcTree->Branch("trackTime", &track_time);
-    mcTree->Branch("trackX", &track_x);
-    mcTree->Branch("trackY", &track_y);
-    mcTree->Branch("trackZ", &track_z);
+    mcTree_flux = new TTree("mcTree_flux", "Tree with MC surface flux info");
+    mcTree_flux->Branch("nTracks", &nTracks);
+    mcTree_flux->Branch("trackEnergy", &trackEnergy);
+    mcTree_flux->Branch("trackName", &trackName);
+    mcTree_flux->Branch("trackParent", &trackParent);
+    mcTree_flux->Branch("px", &px);
+    mcTree_flux->Branch("py", &py);
+    mcTree_flux->Branch("pz", &pz);
+    mcTree_flux->Branch("trackTime", &track_time);
+    mcTree_flux->Branch("trackX", &track_x);
+    mcTree_flux->Branch("trackY", &track_y);
+    mcTree_flux->Branch("trackZ", &track_z);
   }
   if (recordPrimaryParticle)
   {
@@ -80,6 +82,10 @@ void PandaXDataManager::book(const std::string& name)
 void PandaXDataManager::save()
 {
   mcTree->Write("", TObject::kWriteDelete);
+  if (recordSurfaceFlux)
+  {
+    mcTree_flux->Write("", TObject::kWriteDelete);
+  }
   G4cout << "PandaXDataManager: Write data to tree..." << G4endl;
 }
 
@@ -104,7 +110,7 @@ void PandaXDataManager::fillEvent(const G4Event* aEvent, bool partial)
     for (int i = 0; i < nHitCollections; ++i)
     {
       G4VHitsCollection* hitsCollection = hCthis->GetHC(i);
-      if (hitsCollection->GetName().contains("EnergyDepositionHits"))
+      if (G4StrUtil::contains(hitsCollection->GetName(), "EnergyDepositionHits"))
       {
         auto hC = (PandaXEnergyDepositionHitsCollection*)hitsCollection;
         nHits += hitsCollection->GetSize();
@@ -133,7 +139,7 @@ void PandaXDataManager::fillEvent(const G4Event* aEvent, bool partial)
     for (int i = 0; i < nHitCollections; ++i)
     {
       G4VHitsCollection* hitsCollection = hCthis->GetHC(i);
-      if (hitsCollection->GetName().contains("SurfaceFluxHits"))
+      if (G4StrUtil::contains(hitsCollection->GetName(), "SurfaceFluxHits"))
       {
         auto hC = (PandaXSurfaceFluxHitsCollection*)hitsCollection;
         nTracks += hitsCollection->GetSize();
@@ -217,10 +223,13 @@ void PandaXDataManager::fillEvent(const G4Event* aEvent, bool partial)
     }
   }
 
-  if ((recordEnergyDeposition && nHits > 0) || (recordSurfaceFlux && nTracks > 0)
-      || (recordNullEvent && recordPrimaryParticle))
+  if ((recordEnergyDeposition && nHits > 0) || (recordNullEvent && recordPrimaryParticle))
   {
     mcTree->Fill();
+  }
+  if (recordSurfaceFlux && nTracks > 0)
+  {
+    mcTree_flux->Fill();
   }
   if (partial)
   {
@@ -284,7 +293,7 @@ void PandaXDataManager::resetPartialEvent(const G4Event* aEvent)
   for (int i = 0; i < nHitCollections; ++i)
   {
     G4VHitsCollection* hitsCollection = hCthis->GetHC(i);
-    if (hitsCollection->GetName().contains("EnergyDepositionHits"))
+    if (G4StrUtil::contains(hitsCollection->GetName(), "EnergyDepositionHits"))
     {
       auto hC = (PandaXEnergyDepositionHitsCollection*)hitsCollection;
       for (size_t j = 0; j < hC->entries(); ++j)
@@ -294,7 +303,7 @@ void PandaXDataManager::resetPartialEvent(const G4Event* aEvent)
       }
       hC->GetVector()->clear();
     }
-    else if (hitsCollection->GetName().contains("SurfaceFluxHits"))
+    else if (G4StrUtil::contains(hitsCollection->GetName(), "SurfaceFluxHits"))
     {
       auto hC = (PandaXSurfaceFluxHitsCollection*)hitsCollection;
       for (size_t j = 0; j < hC->entries(); ++j)

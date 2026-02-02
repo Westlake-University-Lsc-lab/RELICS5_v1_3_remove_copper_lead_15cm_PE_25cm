@@ -41,6 +41,14 @@ parser.add_argument(
     help="Cut length used in simulation",
 )
 parser.add_argument(
+    "--sampling-mode",
+    dest="sampling_mode",
+    type=bool,
+    action="store",
+    default=False,
+    help="Enable sampling mode",
+)
+parser.add_argument(
     "--enable_track", action="store_true", help="Enable track of surface flux"
 )
 parser.add_argument(
@@ -83,6 +91,11 @@ save_txt: bool = args.save_txt
 optical: bool = args.optical
 disable_energy_depo: bool = args.disable_energy_depo
 disable_primary_particle: bool = args.disable_primary_particle
+sampling_mode: bool = args.sampling_mode
+
+if sampling_mode:
+    disable_energy_depo = True
+    enable_track = True
 
 with open(fipt) as f:
     params = json.load(f)
@@ -404,6 +417,14 @@ else:
             ("shielding_x", f"{CRN_x}*cm"),
             ("shielding_z", f"{CRN_z}*cm"),
         ]
+    elif gen == "sample":
+        generator_name = "SampleGenerator"
+        generator_params = [
+            {
+                "db_path": "/root/RELICS5_v1_3_remove_copper_lead_15cm_PE_25cm/data/flux_neutron_ON.db",
+                "table": "samples",
+            }
+        ]
 
 # ===================== XML文档构建（几何部分完全保留）=====================
 # 创建XML文档
@@ -452,8 +473,29 @@ create_detector_node(
     "World",
     "World",
     "",
-    {"half_x": "500*cm", "half_y": "500*cm", "half_z": "500*cm"},
+    {"half_x": "3000*cm", "half_y": "500*cm", "half_z": "500*cm"},
 )
+if sampling_mode:
+    # AirShell探测器
+    create_detector_node(
+        geometry_node,
+        "HollowCuboid",
+        "AirShell",
+        "World",
+        {
+            "soliname": "AirShellSolid",
+            "logivol": "AirShellLog",
+            "physvol": "AirShell",
+            "width_x": "200*cm",
+            "width_y": "200*cm",
+            "width_z": "250*cm",
+            "thickness": "10*cm",
+            "material": "G4_AIR",
+            "check_overlap": "1",
+            "entrack": "1",
+            "sendname": "AirShell",
+        },
+    )
 
 # Lead探测器
 create_detector_node(
@@ -735,6 +777,18 @@ create_detector_node(
         "surface": "0",
         "check_overlap": "1",
         "sendname": "OuterLXe",
+    }
+    if not sampling_mode
+    else {
+        "soliname": "OuterLXeSolid",
+        "logivol": "OuterLXeLog",
+        "physvol": "OuterLXe",
+        "radius": f"{radius_outer_lxe}*mm",
+        "height": f"{height_outer_lxe}*mm",
+        "material": "LXe",
+        "shift_z": f"{shift_z_outer_lxe}*mm",
+        "surface": "0",
+        "check_overlap": "1",
     },
 )
 
@@ -844,6 +898,18 @@ create_detector_node(
         "shift_z": f"{shift_z_lxe}*mm",
         "surface": "0",
         "sendname": "lxenon",
+        "check_overlap": "1",
+    }
+    if not sampling_mode
+    else {
+        "soliname": "lxenonSolid",
+        "logivol": "lxenonLog",
+        "physvol": "lxenon",
+        "radius": f"{radius_lxe}*mm",
+        "height": f"{height_lxe}*mm",
+        "material": "LXe",
+        "shift_z": f"{shift_z_lxe}*mm",
+        "surface": "0",
         "check_overlap": "1",
     },
 )

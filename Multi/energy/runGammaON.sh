@@ -9,9 +9,9 @@ fi
 export ANALYSIS=${RELICSSIM}/Multi/energy  # Need update
 # export PYTHONPATH="$RELICSSIM/scripts:$PYTHONPATH"
 
-parallel=50
-files=1000
-events=10000
+parallel=150
+files=75
+events=2000
 target=''
 clean=''
 justprint=''
@@ -38,7 +38,7 @@ elif [[ ${target} == '' ]]; then
 fi
 
 # Gamma when reactor ON
-export FOLDER=${RELICSSIM}/result/GammaON_300B
+export FOLDER=${RELICSSIM}/result/GammaON_3B
 reactors="ON"
 topsides="SIDE"
 for reactor in $reactors; do

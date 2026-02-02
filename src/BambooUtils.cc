@@ -126,7 +126,7 @@ double evaluate(std::string str)
 {
   str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
   auto n = str.find('*');
-  double unit{0};
+  double unit = 0.;
   if (n != std::string::npos)
   {
     auto it = unit_map.find(str.substr(n + 1));
@@ -136,7 +136,7 @@ double evaluate(std::string str)
     }
     else
     {
-      unit = 0;
+      return 0;
     }
     return std::stod(str.substr(0, n)) * unit;
   }
@@ -144,7 +144,7 @@ double evaluate(std::string str)
   {
     if (str[0] >= '0' && str[0] <= '9')
     {
-      return std::stod(str.substr(0, n));
+      return std::stod(str);
     }
     else
     {

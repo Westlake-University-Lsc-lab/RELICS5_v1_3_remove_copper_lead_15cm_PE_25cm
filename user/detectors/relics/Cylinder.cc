@@ -31,6 +31,6 @@ bool Cylinder::constructMainLV(const BambooParameters&)
   }
   auto solid = new G4Tubs(soliname, 0, radius, height / 2, 0, 2 * M_PI);
   auto medium = G4Material::GetMaterial(material);
-  mainLV = new G4LogicalVolume(solid, medium, logivol, 0, 0, 0);
+  mainLV = new G4LogicalVolume(solid, medium, logivol, nullptr, nullptr, nullptr);
   return true;
 }

@@ -28,7 +28,6 @@ double BambooParameters::evaluateParameter(const std::string& name) const
 
 void BambooControl::setup(int argc, char* argv[])
 {
-  extern char* optarg;
   std::stringstream ss;
   while (true)
   {
@@ -121,7 +120,7 @@ void read_entry(QXmlStreamReader& reader, BambooParameters& pars)
 {
   while (reader.readNextStartElement())
   {
-    if (reader.name() == "parameter")
+    if (reader.name() == QString("parameter"))
     {
       auto par = read_parameter(reader);
       pars.addParameter(par.first, par.second);
@@ -158,18 +157,18 @@ void BambooControl::read_geometry_xml(QXmlStreamReader& reader)
   std::set<DetectorInfoTuple> det_set;
   while (reader.readNextStartElement())
   {
-    if (reader.name() == "parameter")
+    if (reader.name() == QString("parameter"))
     {
       auto par = read_parameter(reader);
       geometryParameters.addParameter(par.first, par.second);
       reader.skipCurrentElement();
     }
-    else if (reader.name() == "material")
+    else if (reader.name() == QString("material"))
     {
       materialName = extract_attributes(reader, "name");
       read_entry(reader, materialParameters);
     }
-    else if (reader.name() == "detector")
+    else if (reader.name() == QString("detector"))
     {
       det_set.emplace(read_detector_xml(reader));
     }
@@ -183,7 +182,7 @@ void BambooControl::read_geometry_xml(QXmlStreamReader& reader)
 
 bool BambooControl::loadXmlConfig(const std::string& config_name)
 {
-  QFile file(QString(config_name.c_str()));
+  auto file = QFile(QString(config_name.c_str()));
   if (!file.exists())
   {
     std::cerr << "File " << config_name << " does not exist!" << std::endl;
@@ -194,10 +193,10 @@ bool BambooControl::loadXmlConfig(const std::string& config_name)
     std::cerr << "can't open " << config_name << std::endl;
     return false;
   }
-  QXmlStreamReader reader(&file);
+  auto reader = QXmlStreamReader(&file);
   if (reader.readNextStartElement())
   {
-    if (reader.name() != "BambooMC")
+    if (reader.name() != QString("BambooMC"))
     {
       std::cerr << "No entry for BambooMC!" << std::endl;
       return false;
@@ -214,26 +213,26 @@ bool BambooControl::loadXmlConfig(const std::string& config_name)
   }
   while (reader.readNextStartElement())
   {
-    if (reader.name() == "run")
+    if (reader.name() == QString("run"))
     {
       run_number = std::stoi(extract_attributes(reader, "number"));
       reader.skipCurrentElement();
     }
-    else if (reader.name() == "geometry")
+    else if (reader.name() == QString("geometry"))
     {
       read_geometry_xml(reader);
     }
-    else if (reader.name() == "physics")
+    else if (reader.name() == QString("physics"))
     {
       physicsName = extract_attributes(reader, "name");
       read_entry(reader, physicsParameters);
     }
-    else if (reader.name() == "generator")
+    else if (reader.name() == QString("generator"))
     {
       generatorName = extract_attributes(reader, "name");
       read_entry(reader, generatorParameters);
     }
-    else if (reader.name() == "analysis")
+    else if (reader.name() == QString("analysis"))
     {
       analysisName = extract_attributes(reader, "name");
       read_entry(reader, analysisParameters);
