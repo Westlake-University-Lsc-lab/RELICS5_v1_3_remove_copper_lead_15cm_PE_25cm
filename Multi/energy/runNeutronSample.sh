@@ -6,12 +6,12 @@ else
     echo "Using customized geometry setting $GEO"
 fi
 
-export ANALYSIS=${RELICSSIM}/Multi/energy  # Need update
+export ANALYSIS=${RELICSSIM}/Multi/energy
 # export PYTHONPATH="$RELICSSIM/scripts:$PYTHONPATH"
 
-parallel=50
-files=1000
-events=10000
+parallel=200
+files=20
+events=5000
 target=''
 clean=''
 justprint=''
@@ -34,17 +34,12 @@ jq -n ".N=$(expr $files \* $events)" > $norm
 if [[ ${clean} == '-c' ]] && [[ ${target} == '' ]]; then
     target='clean'
 elif [[ ${target} == '' ]]; then
-    target="all"
+    target="collection"
 fi
 
-# # Neutron when reactor ON and OFF
-export FOLDER=${RELICSSIM}/result/NeutronOFF_60M
-reactors="OFF"
-topsides="TOP"
-for reactor in $reactors; do
-    for topside in $topsides; do
-        export SUFFIX="_neutron_${reactor}_${topside}"
-        jq ".$SUFFIX=1000" $norm | sponge $norm
-        ./run.sh -m neutron -r $reactor -s $topside -f $(expr $files \* 10) -j $parallel -e $(expr $events \* 100) -g $target $justprint
-    done
-done
+# # Neutron when reactor ON
+export FOLDER=${RELICSSIM}/result/SampleON_1G_1
+
+export SUFFIX="_neutron_sample"
+jq ".$SUFFIX=1000" $norm | sponge $norm
+${ANALYSIS}/run.sh -m sample -f $(expr $files \* 10) -j $parallel -e $(expr $events \* 1000) $clean $justprint

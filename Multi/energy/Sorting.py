@@ -127,7 +127,7 @@ def clustering(tree, ClusteringEps):
     df["volume"] = [str(s) for s in list(tree.volume)]
 
     df = df[df["energy"] > 0]
-    df = np.flip(np.sort(df, kind="stable", order="energy"))
+    df = np.sort(df, kind="stable", order="energy")[::-1]
     df.sort(kind="stable", order="t")
 
     nr = is_nr(df)

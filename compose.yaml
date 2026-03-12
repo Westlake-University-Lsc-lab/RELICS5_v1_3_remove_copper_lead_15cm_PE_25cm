@@ -1,0 +1,15 @@
+services:
+  relics_docker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - $HOME:/root
+    ports:
+      - 8022:22
+    logging: 
+      driver: "json-file"
+      options: 
+        max-size: 1m
+        max-file: 1

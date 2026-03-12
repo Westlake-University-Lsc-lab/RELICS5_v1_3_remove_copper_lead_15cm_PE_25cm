@@ -27,7 +27,7 @@ parser.add_argument(
 parser.add_argument(
     "--gen",
     dest="generator",
-    choices=["muon", "neutron", "gamma", "material", "CRN"],
+    choices=["muon", "neutron", "gamma", "material", "CRN", "sample"],
     action="store",
     default="muon",
     help="Generator used",
@@ -43,9 +43,9 @@ parser.add_argument(
 parser.add_argument(
     "--sampling-mode",
     dest="sampling_mode",
-    type=bool,
+    choices=["True", "False"],
     action="store",
-    default=False,
+    default="False",
     help="Enable sampling mode",
 )
 parser.add_argument(
@@ -91,14 +91,14 @@ save_txt: bool = args.save_txt
 optical: bool = args.optical
 disable_energy_depo: bool = args.disable_energy_depo
 disable_primary_particle: bool = args.disable_primary_particle
-sampling_mode: bool = args.sampling_mode
+sampling_mode: bool = args.sampling_mode == "True"
 
 if sampling_mode:
     disable_energy_depo = True
     enable_track = True
 
 with open(fipt) as f:
-    params = json.load(f)
+    params: dict = json.load(f)
 
 # ===================== 完整参数加载与校验（原代码全部保留）=====================
 # 从参数文件加载参数
@@ -306,6 +306,7 @@ muon_z = params["muon_z"]
 muon_e_low = params["muon_e_low"]
 CRN_x = params["CRN_x"]
 CRN_z = params["CRN_z"]
+sample_file_path: str | None = params.get("sample_file_path")
 
 
 # ===================== 辅助函数（原代码全部保留）=====================
@@ -418,12 +419,13 @@ else:
             ("shielding_z", f"{CRN_z}*cm"),
         ]
     elif gen == "sample":
+        assert sample_file_path is not None, "参数 sample_file_path 未在配置文件中指定"
         generator_name = "SampleGenerator"
         generator_params = [
-            {
-                "db_path": "/root/RELICS5_v1_3_remove_copper_lead_15cm_PE_25cm/data/flux_neutron_ON.db",
-                "table": "samples",
-            }
+            (
+                "file_path",
+                sample_file_path,
+            )
         ]
 
 # ===================== XML文档构建（几何部分完全保留）=====================
@@ -473,7 +475,7 @@ create_detector_node(
     "World",
     "World",
     "",
-    {"half_x": "3000*cm", "half_y": "500*cm", "half_z": "500*cm"},
+    {"half_x": "800*cm", "half_y": "500*cm", "half_z": "500*cm"},
 )
 if sampling_mode:
     # AirShell探测器

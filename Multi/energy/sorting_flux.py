@@ -86,8 +86,8 @@ df = df.filter(
     | (df["trackZ"] < -(width_z - thickness) / 2)
     | (df["trackZ"] > (width_z - thickness) / 2)
 )
-logging.info(f"Effective flux track number = {len(df)}/{totalTracks}")
+logging.info(f"Effective flux track number = {len(df)} / {totalTracks}")
 
-df.write_parquet(OutputFile, compression="gzip")
+df.write_parquet(OutputFile, compression="zstd")
 
 logging.info(f"Saving: {OutputFile}")

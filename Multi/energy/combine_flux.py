@@ -59,7 +59,9 @@ for n in range(BASE_RUN + 1, BASE_RUN + N + 1):
     flux_list.append(df)
 
 flux = pl.concat(flux_list)
-flux.write_parquet(OutputFile, compression="gzip")
+logging.info(
+    f"neutron / total = {len(flux.filter(pl.col('trackName') == 'neutron'))} / {len(flux)}"
+)
 
+flux.write_parquet(OutputFile, compression="zstd")
 logging.info(f"{OutputFile} saved")
-logging.info(f"{len(flux)} tracks in the file")

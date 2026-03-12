@@ -5,7 +5,8 @@
 #include <G4ParticleGun.hh>
 #include <G4ParticleTable.hh>
 #include <Randomize.hh>
-#include <sqlite3.h>
+#include <sys/mman.h>
+#include <unistd.h>
 
 using namespace CLHEP;
 
@@ -15,80 +16,56 @@ SampleGenerator::SampleGenerator(const BambooParameters& pars)
   : BambooGenerator{pars}, gun{new G4ParticleGun}
 {
   const auto& pmap = generatorParameters.getParameters();
-  if (pmap.find("db_path") == pmap.end())
-  {
-    throw std::runtime_error("SampleGenerator: should provide `db_path`");
-  }
-  if (pmap.find("table") == pmap.end())
-  {
-    throw std::runtime_error("SampleGenerator: should provide `table`");
-  }
-  table = generatorParameters.getParameter("table");
+  if (pmap.find("file_path") == pmap.end())
+    throw std::runtime_error("SampleGenerator: should provide `file_path`");
 
-  if (sqlite3_open_v2(generatorParameters.getParameter("db_path").c_str(), &db,
-                      SQLITE_OPEN_READONLY, nullptr)
-      != SQLITE_OK)
-  {
-    throw std::runtime_error("SampleGenerator: cannot open database file");
-  }
+  auto& file_path = generatorParameters.getParameter("file_path");
 
-  std::stringstream sql;
-  sql << "SELECT COUNT(*) FROM " << table << ";";
+  FILE* fd = fopen64(file_path.c_str(), "rb");
+  if (fd == nullptr) throw std::runtime_error("SampleGenerator: cannot open file " + file_path);
 
-  sqlite3_stmt* stmt = nullptr;
-  if (sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, nullptr) != SQLITE_OK)
-  {
-    throw std::runtime_error("SampleGenerator: cannot prepare count statement");
-  }
-  if (sqlite3_step(stmt) == SQLITE_ROW)
-  {
-    row_count = sqlite3_column_int64(stmt, 0);
-  }
-  else
-  {
-    throw std::runtime_error("SampleGenerator: cannot get row count");
-  }
-  sqlite3_finalize(stmt);
+  if (fseeko64(fd, 0, SEEK_END) != 0)
+    throw std::runtime_error("SampleGenerator: cannot seek to end of file " + file_path);
+
+  auto tail = ftello64(fd);
+  if (tail <= 0)
+    throw std::runtime_error("SampleGenerator: file is empty or get size failed for " + file_path);
+
+  if (tail % sizeof(SampleRow) != 0)
+    throw std::runtime_error("SampleGenerator: file size is not multiple of SampleRow size in "
+                             + file_path);
+
+  table_length = tail / sizeof(SampleRow);
+
+  sampleTable = static_cast<SampleRow*>(
+    mmap(nullptr, table_length * sizeof(SampleRow), PROT_READ, MAP_SHARED, fileno(fd), 0));
+
+  if (fclose(fd) != 0) throw std::runtime_error("SampleGenerator: cannot close file " + file_path);
+
+  if (sampleTable == MAP_FAILED)
+    throw std::runtime_error("SampleGenerator: cannot mmap file " + file_path);
 }
 
 void SampleGenerator::GeneratePrimaries(G4Event* anEvent)
 {
-  std::stringstream sql;
-  sql << "SELECT trackX, trackY, trackZ, px, py, pz, trackEnergy, trackName FROM " << table
-      << " LIMIT 1 OFFSET " << G4RandFlat::shootInt(row_count) << ";";
+  const long offset = G4RandFlat::shootInt(table_length);
+  const double& dirX = sampleTable[offset].trackX * mm;
+  const double& dirY = sampleTable[offset].trackY * mm;
+  const double& dirZ = sampleTable[offset].trackZ * mm;
+  const double& px = sampleTable[offset].px * keV;
+  const double& py = sampleTable[offset].py * keV;
+  const double& pz = sampleTable[offset].pz * keV;
+  const double& energy = sampleTable[offset].trackEnergy * keV;
+  const G4String trackName = sampleTable[offset].trackName;
 
-  sqlite3_stmt* stmt = nullptr;
-  if (sqlite3_prepare_v2(db, sql.str().c_str(), -1, &stmt, nullptr) != SQLITE_OK)
-  {
-    throw std::runtime_error("SampleGenerator: cannot prepare select statement");
-  }
-  if (sqlite3_step(stmt) == SQLITE_ROW)
-  {
-    const G4double dirX = sqlite3_column_double(stmt, 0) * mm;
-    const G4double dirY = sqlite3_column_double(stmt, 1) * mm;
-    const G4double dirZ = sqlite3_column_double(stmt, 2) * mm;
-    const G4double px = sqlite3_column_double(stmt, 3) * keV;
-    const G4double py = sqlite3_column_double(stmt, 4) * keV;
-    const G4double pz = sqlite3_column_double(stmt, 5) * keV;
-    const G4double energy = sqlite3_column_double(stmt, 6) * keV;
-    const G4String trackName = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 7));
+  auto particleTable = G4ParticleTable::GetParticleTable();
+  G4ParticleDefinition* particle = particleTable->FindParticle(trackName);
+  if (particle == nullptr)
+    throw std::runtime_error("SampleGenerator: cannot find particle " + trackName);
 
-    auto particleTable = G4ParticleTable::GetParticleTable();
-    G4ParticleDefinition* particle = particleTable->FindParticle(trackName);
-    if (particle == nullptr)
-    {
-      throw std::runtime_error("SampleGenerator: cannot find particle " + trackName);
-    }
-
-    gun->SetParticleDefinition(particle);
-    gun->SetParticleEnergy(energy);
-    gun->SetParticleMomentumDirection(G4ThreeVector(px, py, pz).unit());
-    gun->SetParticlePosition(G4ThreeVector(dirX, dirY, dirZ));
-    gun->GeneratePrimaryVertex(anEvent);
-  }
-  else
-  {
-    throw std::runtime_error("SampleGenerator: cannot get row data");
-  }
-  sqlite3_finalize(stmt);
+  gun->SetParticleDefinition(particle);
+  gun->SetParticleEnergy(energy);
+  gun->SetParticleMomentumDirection(G4ThreeVector(px, py, pz).unit());
+  gun->SetParticlePosition(G4ThreeVector(dirX, dirY, dirZ));
+  gun->GeneratePrimaryVertex(anEvent);
 }

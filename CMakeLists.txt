@@ -15,9 +15,6 @@ include_directories(${Geant4_INCLUDE_DIRS})
 # root
 find_package(ROOT REQUIRED)
 
-# SQLite3
-find_package(SQLite3 REQUIRED)
-
 # Qt6
 find_package(Qt6 REQUIRED COMPONENTS Core)
 message("Found Qt6Core version ${Qt6Core_VERSION}")
@@ -78,8 +75,8 @@ if(ENABLE_USER_MC)
     include_directories(${PROJECT_SOURCE_DIR}/user/mc/${USER_MC})
   endforeach(USER_MC)
   add_library(UserMC ${UserMC})
-  target_include_directories(UserMC PRIVATE ${ROOT_INCLUDE_DIRS} ${SQLite3_INCLUDE_DIRS})
-  target_link_libraries(UserMC ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${SQLite3_LIBRARIES})
+  target_include_directories(UserMC PRIVATE ${ROOT_INCLUDE_DIRS})
+  target_link_libraries(UserMC ${Geant4_LIBRARIES} ${ROOT_LIBRARIES})
 endif(ENABLE_USER_MC)
 
 add_library(BambooCore src/BambooControl.cc src/BambooUtils.cc src/BambooDetectorConstruction.cc)

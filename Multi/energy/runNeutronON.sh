@@ -11,8 +11,8 @@ export SAMPLING_MODE='True'
 # export PYTHONPATH="$RELICSSIM/scripts:$PYTHONPATH"
 
 parallel=200
-files=60
-events=200000
+files=20
+events=500000
 target=''
 clean=''
 justprint=''
@@ -39,7 +39,7 @@ elif [[ ${target} == '' ]]; then
 fi
 
 # # Neutron when reactor ON
-export FOLDER=${RELICSSIM}/result/NeutronON_12T
+export FOLDER=${RELICSSIM}/result/NeutronON_100G
 reactors="ON"
 topsides="SIDE"
 for reactor in $reactors; do

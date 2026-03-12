@@ -84,5 +84,6 @@
     "muon_z": 165,
     "muon_e_low": 0.106,
     "CRN_x": 250,
-    "CRN_z": 165
+    "CRN_z": 165,
+    "sample_file_path": "/root/RELICS5_v1_3_remove_copper_lead_15cm_PE_25cm/data/flux_neutron_ON_SIDE_1.bin"
 }
