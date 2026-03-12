@@ -8,6 +8,15 @@ RelicsSim - A Geant4-based Monte Carlo simulation Program
 
 `RelicsSim` is a [`Geant4`](https://geant4.web.cern.ch/) & [BambooMC](https://github.com/pandax-experiments/BambooMC) based simulation package. The motivation of it is to estimate various backgrounds for RELICS experiment. The package will aid sensitivity prediction and geometry design. 
 
+## Set up environment
+
+```bash
+docker compose build
+docker compose up -d
+ssh -p xxxx root@x.x.x.x
+echo "export RELICSSIM=path_of_this_folder" >> ~/.bashrc
+```
+
 ## Geometry generator
 
 ```python
@@ -47,12 +56,30 @@ ISOTOPEFILE=${path_to_bamboomc}/macro/isotopes/Kr85.mac ${path_to_bamboomc}/buil
 
 ## External Neutron
 
+Please read the script to determine the input parameters.
+
+### First step
+
+Generate Smples.
+
 ```bash
-NEUTRONHIST=${path_to_bamboomc}/data/neutronON.txt ${path_to_bamboomc}/build/BambooMC -c ${path_to_bamboomc}/config/cevns.xml -m ${path_to_bamboomc}/macro/neutronSIDE.mac [ -n 100 ] [ -o neutron.root ] [ -i ]
+Multi/energy/runNeutronON.sh ...
+```
+### Second step
+
+Convert the sample file format.
+
+```bash
+scripts/parquet2bin.py --InputFile ${RELICSSIM}/result/NeutronON_10G/flux_neutron_ON_SIDE_0000001_0000200.parquet --OutputFile ${RELICSSIM}/data/flux_neutron_ON_SIDE_1.bin
 ```
 
-1. `NEUTRONHIST`: environmental variable to specify the neutron spectrum used in simulation, `neutronON.txt` or `neutronOFF.txt`
-2. `-m`: neutron flux direction, `neutronSIDE.mac` or `neutronTOP.mac`
+### Third step
+
+```bash
+Multi/energy/runNeutronSample.sh ...
+```
+
+"sample_file_path" in "geo_params.json" is used to determine the sample file path.
 
 ## Optical
 

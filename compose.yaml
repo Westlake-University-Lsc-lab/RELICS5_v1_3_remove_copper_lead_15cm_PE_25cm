@@ -7,7 +7,7 @@ services:
     volumes:
       - $HOME:/root
     ports:
-      - 8022:22
+      - xxxx:22 #should be changed to the port you want to use for ssh
     logging: 
       driver: "json-file"
       options: 
