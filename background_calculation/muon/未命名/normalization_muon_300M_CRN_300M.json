@@ -1,0 +1,18 @@
+{
+    "muon": {
+		"factor": 300000000,
+		"activity": 932.39
+	},
+	"CRN": {
+		"factor": 300000000,
+		"activity": 62.15
+	},
+	"CRN_no_shielding": {
+		"factor": 300000000,
+		"activity": 62.15
+	},
+	"muon_no_shielding": {
+		"factor": 300000000,
+		"activity": 932.39
+	}
+}

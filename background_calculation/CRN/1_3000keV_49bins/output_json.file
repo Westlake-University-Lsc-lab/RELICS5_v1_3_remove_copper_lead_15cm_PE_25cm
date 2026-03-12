@@ -1,0 +1,20 @@
+Run
+请输入约束要求的ER最大值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的ER最小值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的bin: <class 'str'>
+<class 'int'>
+LXe mass: 4.777872036063221 kg
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+CRN ER rate: 0.09802886297201009 /kg/days/keV
+CRN ER error: 0.00034993574207537446
+CRN ER rate(mDRU): 98.02886297201009
+CRN ER error(mDRU): 0.3499357420753745
+bins_nr=np.logspace(-4, 7, 101)
+bins_er=np.linspace(1,3000,50)
+max ER 3000.0
+min ER 1
+4777872.036063221

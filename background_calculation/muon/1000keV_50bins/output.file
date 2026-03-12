@@ -1,0 +1,16 @@
+Run
+请输入约束要求的ER最大值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的bin: <class 'str'>
+<class 'int'>
+LXe mass: 31.772410506804203 kg
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+muon ER rate: 0.09162091545232241 /kg/days/keV
+muon ER error: 0.0007593569810314829
+muon ER rate(mDRU): 91.62091545232241
+muon ER error(mDRU): 0.759356981031483
+bins_nr=np.logspace(-4, 7, 101)
+bins_er=np.linspace(0,1000,51)
+max ER 1000.0

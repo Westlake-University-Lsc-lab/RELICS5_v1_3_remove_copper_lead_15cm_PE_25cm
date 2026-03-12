@@ -1,0 +1,13 @@
+Run
+请输入约束要求的ER最大值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的bin: <class 'str'>
+<class 'int'>
+请输入约束要求的NR bin: <class 'int'>
+LXe mass: 6.284740615454599 kg
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+gamma_R NR rate: {'gamma_R': 0.0} /kg/days
+gamma_R NR error: {'gamma_R': 0.0}
+bins_nr=np.logspace(-4, 7, 101)

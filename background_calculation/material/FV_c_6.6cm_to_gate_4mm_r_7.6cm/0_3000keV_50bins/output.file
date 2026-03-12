@@ -1,0 +1,11 @@
+请输入约束要求的ER最大值(keV): 请输入约束要求的ER最小值(keV): 请输入约束要求的bin: finish the function,then read the data
+finish reading data,then output the message
+finish reading data,then output the message
+Material ER rate: 0.05310250943974547 /kg/days/keV
+Material ER error: 0.00032007040423527426
+Material ER rate(mDRU): 53.10250943974547
+Material ER error(mDRU): 0.3200704042352743
+bins_er=np.linspace(0,3000,51)
+max ER 3000.0
+min ER 0
+FV mass 4.570138469277862

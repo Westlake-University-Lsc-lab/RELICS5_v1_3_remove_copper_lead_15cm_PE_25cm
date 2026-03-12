@@ -1,0 +1,20 @@
+Run
+请输入约束要求的ER最大值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的ER最小值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的bin: <class 'str'>
+<class 'int'>
+LXe mass: 4.777872036063221 kg
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+GammaON ER rate: 0.0005471271202029056 /kg/days/keV
+GammaON ER error: 0.0001367817800507264
+GammaON ER rate(mDRU): 0.5471271202029055
+GammaON ER error(mDRU): 0.1367817800507264
+bins_nr=np.logspace(-4, 7, 101)
+bins_er=np.linspace(1,3000,50)
+max ER 3000.0
+min ER 1
+4777872.036063221

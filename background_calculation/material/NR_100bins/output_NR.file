@@ -1,0 +1,7 @@
+请输入约束要求的ER最大值(keV): 请输入约束要求的ER最小值(keV): 请输入约束要求的ERbin: 请输入约束要求的NR bin: <class 'int'>
+finish the function,then read the data
+finish reading data,then output the message
+finish reading data,then output the message
+CRN NR rate: 0.0 /kg/days
+CRN NR error: 0.0
+bins_nr=np.logspace(-4, 7, 101)

@@ -81,6 +81,16 @@ Multi/energy/runNeutronSample.sh ...
 
 "sample_file_path" in "geo_params.json" is used to determine the sample file path.
 
+### Analysis
+
+```bash
+cd background_calculation/NeutronON
+python3 NeutronON_json.py
+python3 NeutronON_NR.py
+```
+
+The input parameter matches the output folder name.
+
 ## Optical
 
 ```bash

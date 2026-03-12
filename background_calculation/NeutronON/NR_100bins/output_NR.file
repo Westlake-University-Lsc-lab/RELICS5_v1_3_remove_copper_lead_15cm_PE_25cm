@@ -1,0 +1,25 @@
+Run
+请输入约束要求的ER最大值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的bin: <class 'str'>
+<class 'int'>
+请输入约束要求的NR bin: <class 'int'>
+LXe mass: 6.284740615454599 kg
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+neutron_R NR rate: {'neutron_R': 0.053092869106398925} /kg/days
+neutron_R NR error: {'neutron_R': 0.017697623035466306}
+bins_nr=np.logspace(-4, 7, 101)
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+neutron_R NR rate: {'neutron_R': 0.0} /kg/days
+neutron_R NR error: {'neutron_R': 0.0}
+bins_nr=np.logspace(-4, 7, 101)
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+neutron_R NR rate: {'neutron_R': 0.03709053514322177} /kg/days
+neutron_R NR error: {'neutron_R': 0.0007677373574650209}
+bins_nr=np.logspace(-4, 7, 101)

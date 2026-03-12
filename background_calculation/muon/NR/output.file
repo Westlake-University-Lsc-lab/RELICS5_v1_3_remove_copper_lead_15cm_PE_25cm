@@ -1,0 +1,10 @@
+Run
+LXe mass: 31.772410506804203 kg
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+muon NR rate: {'muon': 0.03387399785962449} /kg/days
+muon NR error: {'muon': 0.0068955081811156085}
+bins_nr=np.logspace(-4, 7, 101)
+bins_er=np.linspace(0,20,21)
+max ER 20

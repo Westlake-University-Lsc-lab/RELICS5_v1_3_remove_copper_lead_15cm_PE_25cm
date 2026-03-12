@@ -1,0 +1,13 @@
+Run
+请输入约束要求的ER最大值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的bin: <class 'str'>
+<class 'int'>
+请输入约束要求的NR bin: <class 'int'>
+LXe mass: 6.284740615454599 kg
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+CRN NR rate: {'CRN': 9.933967592309939} /kg/days
+CRN NR error: {'CRN': 0.16820329562677644}
+bins_nr=np.logspace(-4, 7, 101)

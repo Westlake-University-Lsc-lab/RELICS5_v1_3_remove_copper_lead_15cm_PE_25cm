@@ -1,0 +1,20 @@
+Run
+请输入约束要求的ER最大值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的ER最小值(keV): <class 'str'>
+<class 'int'>
+请输入约束要求的bin: <class 'str'>
+<class 'int'>
+LXe mass: 4.777872036063221 kg
+-----------------------
+finish the function,then read the data
+finish reading data,then output the message
+NeutronOFF ER rate: 0.00065536497561371 /kg/days/keV
+NeutronOFF ER error: 0.000327682487806855
+NeutronOFF ER rate(mDRU): 0.65536497561371
+NeutronOFF ER error(mDRU): 0.327682487806855
+bins_nr=np.logspace(-4, 7, 101)
+bins_er=np.linspace(0,20,21)
+max ER 20.0
+min ER 0
+4777872.036063221
